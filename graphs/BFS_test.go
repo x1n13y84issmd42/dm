@@ -7,7 +7,12 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_DFS_1(T *testing.T) {
+type TestNode struct {
+	Node
+	Name string
+}
+
+func Test_BFS_1(T *testing.T) {
 	root := TestNode{
 		Name: "L0",
 	}
@@ -30,10 +35,10 @@ func Test_DFS_1(T *testing.T) {
 		Name: "L12",
 	})
 
-	expected := "L0L10L20L30L11L21L12"
+	expected := "L0L10L11L12L20L21L30"
 	actual := ""
 
-	for node := range DFS(&root) {
+	for node := range BFS(&root) {
 		actual = fmt.Sprintf("%s%s", actual, node.(*TestNode).Name)
 	}
 
