@@ -1,8 +1,8 @@
 package graphs
 
 // BFS creates a breadth-first search iterator.
-func BFS(node INode) IteratorChannel {
-	ch := make(chan INode)
+func BFS(node IDNode) IteratorChannel {
+	ch := make(chan IDNode)
 	stack := NodeStack{node}
 	go func() {
 		traverseBFS(ch, &stack)

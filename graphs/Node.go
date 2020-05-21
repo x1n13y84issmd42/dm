@@ -1,26 +1,26 @@
 package graphs
 
-// INode is an intefrace for basic graph nodes.
-type INode interface {
-	Add(n INode) INode
-	Child(i int) INode
+// IDNode is an intefrace for basic directed graph nodes.
+type IDNode interface {
+	Add(n IDNode) IDNode
+	Child(i int) IDNode
 	NumChildren() int
-	Children() []INode
+	Children() []IDNode
 }
 
-// Node is a graph node.
-type Node struct {
-	ChildNodes []INode
+// DNode is a directed graph node.
+type DNode struct {
+	ChildNodes []IDNode
 }
 
 // Add adds a child node.
-func (node *Node) Add(n INode) INode {
+func (node *DNode) Add(n IDNode) IDNode {
 	node.ChildNodes = append(node.ChildNodes, n)
 	return n
 }
 
 // Child returns an i-th child node, if present, nil otherwise.
-func (node *Node) Child(i int) INode {
+func (node *DNode) Child(i int) IDNode {
 	if i < len(node.ChildNodes) {
 		return node.ChildNodes[i]
 	}
@@ -29,11 +29,11 @@ func (node *Node) Child(i int) INode {
 }
 
 // NumChildren returns number of child nodes.
-func (node *Node) NumChildren() int {
+func (node *DNode) NumChildren() int {
 	return len(node.ChildNodes)
 }
 
 // Children returns all the child nodes.
-func (node *Node) Children() []INode {
+func (node *DNode) Children() []IDNode {
 	return node.ChildNodes
 }

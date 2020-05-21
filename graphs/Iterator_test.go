@@ -18,7 +18,7 @@ func Test_NodeStack(T *testing.T) {
 	})
 
 	T.Run("Append", func(T *testing.T) {
-		stack.Append([]INode{
+		stack.Append([]IDNode{
 			&TestNode{Name: "1"},
 			&TestNode{Name: "2"},
 			&TestNode{Name: "3"},

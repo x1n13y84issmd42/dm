@@ -8,7 +8,7 @@ import (
 )
 
 type TestNode struct {
-	Node
+	DNode
 	Name string
 }
 
