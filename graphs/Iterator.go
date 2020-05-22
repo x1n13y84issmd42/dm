@@ -27,3 +27,7 @@ func (stack *NodeStack) PopFront() IDNode {
 
 	return nil
 }
+
+// NodeVisitedMap is a map of visited nodes.
+// Used in iterators.
+type NodeVisitedMap map[IDNode]bool
