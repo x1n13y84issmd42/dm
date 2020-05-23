@@ -1,9 +1,9 @@
-package graphs
+package iterator
 
 import "github.com/x1n13y84issmd42/dm/graphs/nodes"
 
 // BFS creates a breadth-first search iterator.
-func BFS(node nodes.INode) IteratorChannel {
+func BFS(node nodes.INode) Channel {
 	ch := make(chan nodes.INode)
 	stack := NodeStack{node}
 	go func() {
@@ -14,7 +14,7 @@ func BFS(node nodes.INode) IteratorChannel {
 	return ch
 }
 
-func traverseBFS(ch IteratorChannel, stack *NodeStack, visited *NodeVisitedMap) {
+func traverseBFS(ch Channel, stack *NodeStack, visited *NodeVisitedMap) {
 	for len(*stack) > 0 {
 		node := stack.PopFront()
 

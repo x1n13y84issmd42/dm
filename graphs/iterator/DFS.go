@@ -1,9 +1,9 @@
-package graphs
+package iterator
 
 import "github.com/x1n13y84issmd42/dm/graphs/nodes"
 
 // DFS creates a depth-first search iterator.
-func DFS(root nodes.INode) IteratorChannel {
+func DFS(root nodes.INode) Channel {
 	ch := make(chan nodes.INode)
 	go func() {
 		visited := NodeVisitedMap{}
@@ -13,7 +13,7 @@ func DFS(root nodes.INode) IteratorChannel {
 	return ch
 }
 
-func traverseDFS(node nodes.INode, ch IteratorChannel, visited *NodeVisitedMap) {
+func traverseDFS(node nodes.INode, ch Channel, visited *NodeVisitedMap) {
 	if (*visited)[node] {
 		return
 	}
