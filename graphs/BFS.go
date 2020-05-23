@@ -1,8 +1,10 @@
 package graphs
 
+import "github.com/x1n13y84issmd42/dm/graphs/nodes"
+
 // BFS creates a breadth-first search iterator.
-func BFS(node IDNode) IteratorChannel {
-	ch := make(chan IDNode)
+func BFS(node nodes.INode) IteratorChannel {
+	ch := make(chan nodes.INode)
 	stack := NodeStack{node}
 	go func() {
 		visited := NodeVisitedMap{}
@@ -20,8 +22,8 @@ func traverseBFS(ch IteratorChannel, stack *NodeStack, visited *NodeVisitedMap) 
 			ch <- node
 			(*visited)[node] = true
 
-			if node.NumChildren() > 0 {
-				stack.Append(node.Children())
+			if node.Adjacent().Count() > 0 {
+				stack.Append(node.Adjacent().Values())
 			}
 		}
 	}

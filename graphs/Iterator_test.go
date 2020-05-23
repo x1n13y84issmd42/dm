@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/x1n13y84issmd42/dm/graphs/nodes"
 )
 
 func Test_NodeStack(T *testing.T) {
@@ -18,7 +19,7 @@ func Test_NodeStack(T *testing.T) {
 	})
 
 	T.Run("Append", func(T *testing.T) {
-		stack.Append([]IDNode{
+		stack.Append([]nodes.INode{
 			&TestNode{Name: "1"},
 			&TestNode{Name: "2"},
 			&TestNode{Name: "3"},
