@@ -4,23 +4,19 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	// "github.com/x1n13y84issmd42/dm/graphs/ut"
 )
 
-// TestNode ...
-type TestNode struct {
+type testNode struct {
 	Node
 	Name string
 }
 
-// ID ...
-func (node *TestNode) ID() NodeID {
+func (node *testNode) ID() NodeID {
 	return NodeID(node.Name)
 }
 
-// Node ...
-func TNode(name string) *TestNode {
-	node := TestNode{
+func tnode(name string) *testNode {
+	node := testNode{
 		Node: Node{},
 		Name: name,
 	}
@@ -34,16 +30,16 @@ func Test_Set_Add_Get_Remove(T *testing.T) {
 	set := NewNodes()
 	assert.Equal(T, 0, set.Count())
 
-	ares := set.Add(TNode("a"))
+	ares := set.Add(tnode("a"))
 	assert.Equal(T, 1, set.Count())
 	assert.False(T, ares)
 
-	ares = set.Add(TNode("a"))
+	ares = set.Add(tnode("a"))
 	assert.True(T, ares)
-	set.Add(TNode("b"))
+	set.Add(tnode("b"))
 	assert.Equal(T, 2, set.Count())
 
-	assert.Equal(T, TNode("a"), set.Get("a"))
+	assert.Equal(T, tnode("a"), set.Get("a"))
 
 	ares = set.Remove("a")
 	assert.True(T, ares)
@@ -57,27 +53,27 @@ func Test_Set_Add_Get_Remove(T *testing.T) {
 func Test_Set_Values(T *testing.T) {
 	set := NewNodes()
 
-	set.Add(TNode("a"))
-	set.Add(TNode("z"))
-	set.Add(TNode("c"))
-	set.Add(TNode("b"))
-	set.Add(TNode("e"))
-	set.Add(TNode("a"))
-	set.Add(TNode("z"))
-	set.Add(TNode("z"))
+	set.Add(tnode("a"))
+	set.Add(tnode("z"))
+	set.Add(tnode("c"))
+	set.Add(tnode("b"))
+	set.Add(tnode("e"))
+	set.Add(tnode("a"))
+	set.Add(tnode("z"))
+	set.Add(tnode("z"))
 
-	expected := []*TestNode{
-		TNode("a"),
-		TNode("b"),
-		TNode("c"),
-		TNode("e"),
-		TNode("z"),
+	expected := []*testNode{
+		tnode("a"),
+		tnode("b"),
+		tnode("c"),
+		tnode("e"),
+		tnode("z"),
 	}
 
-	actual := []*TestNode{}
+	actual := []*testNode{}
 
 	for _, n := range set.Values() {
-		actual = append(actual, n.(*TestNode))
+		actual = append(actual, n.(*testNode))
 	}
 
 	assert.Equal(T, expected, actual)
@@ -86,21 +82,21 @@ func Test_Set_Values(T *testing.T) {
 func Test_Set_Clone(T *testing.T) {
 	set := NewNodes()
 
-	set.Add(TNode("a"))
-	set.Add(TNode("z"))
-	set.Add(TNode("c"))
-	set.Add(TNode("b"))
-	set.Add(TNode("e"))
-	set.Add(TNode("a"))
-	set.Add(TNode("z"))
-	set.Add(TNode("z"))
+	set.Add(tnode("a"))
+	set.Add(tnode("z"))
+	set.Add(tnode("c"))
+	set.Add(tnode("b"))
+	set.Add(tnode("e"))
+	set.Add(tnode("a"))
+	set.Add(tnode("z"))
+	set.Add(tnode("z"))
 
 	expected := NewNodes()
-	expected.Add(TNode("a"))
-	expected.Add(TNode("b"))
-	expected.Add(TNode("c"))
-	expected.Add(TNode("e"))
-	expected.Add(TNode("z"))
+	expected.Add(tnode("a"))
+	expected.Add(tnode("b"))
+	expected.Add(tnode("c"))
+	expected.Add(tnode("e"))
+	expected.Add(tnode("z"))
 
 	assert.Equal(T, expected, set.Clone())
 }
