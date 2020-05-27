@@ -20,11 +20,15 @@ func NewNodes() *Nodes {
 func (set *Nodes) Add(n INode) bool {
 	had := set.Has(n.ID())
 	set.Map[n.ID()] = n
-	return !had
+	return had
 }
 
-// Remove removes a node from the set.
-func (set *Nodes) Remove(nID NodeID) {}
+// Remove removes a node from the set. Returns true if node was present in the set before removal.
+func (set *Nodes) Remove(nID NodeID) bool {
+	had := set.Has(nID)
+	delete(set.Map, nID)
+	return had
+}
 
 // Has tells whether a node is present in the set.
 func (set *Nodes) Has(nID NodeID) bool {
@@ -76,6 +80,7 @@ func (set Nodes) Range() Channel {
 		// Sorting them.
 		sort.Strings(keys)
 
+		// Sending values to the channel.
 		for _, k := range keys {
 			ch <- set.Map[NodeID(k)]
 		}
