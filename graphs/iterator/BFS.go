@@ -1,6 +1,8 @@
 package iterator
 
-import "github.com/x1n13y84issmd42/dm/graphs/nodes"
+import (
+	"github.com/x1n13y84issmd42/dm/graphs/nodes"
+)
 
 // BFS creates a breadth-first search iterator.
 func BFS(node nodes.INode) Channel {

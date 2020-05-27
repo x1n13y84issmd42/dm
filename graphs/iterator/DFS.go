@@ -23,7 +23,7 @@ func traverseDFS(node nodes.INode, ch Channel, visited *NodeVisitedMap) {
 	ch <- node
 	(*visited)[node] = true
 
-	for _, n := range node.Adjacent() {
+	for n := range node.Adjacent().Range() {
 		traverseDFS(n, ch, visited)
 	}
 }

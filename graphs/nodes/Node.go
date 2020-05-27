@@ -6,7 +6,7 @@ type NodeID string
 // INode is an intefrace for basic directed graph nodes.
 type INode interface {
 	ID() NodeID
-	Adjacent() Nodes
+	Adjacent() *Nodes
 
 	SetAdjacency(a IAdjacency)
 
@@ -20,13 +20,13 @@ type Node struct {
 	A IAdjacency
 
 	// DEPRECATED
-	ChildNodes Nodes
+	ChildNodes *Nodes
 }
 
 // init is DEPRECATED
 func (node *Node) init() {
 	if node.ChildNodes == nil {
-		node.ChildNodes = Nodes{}
+		node.ChildNodes = NewNodes()
 	}
 }
 
@@ -49,9 +49,7 @@ func (node *Node) SetAdjacency(a IAdjacency) {
 }
 
 // Adjacent returns all the adjacent nodes.
-func (node *Node) Adjacent() Nodes {
+func (node *Node) Adjacent() *Nodes {
 	node.init()
-	var inode interface{}
-	inode = node
-	return node.A.AdjacentNodes(inode.(INode))
+	return node.A.AdjacentNodes(node)
 }

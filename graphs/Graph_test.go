@@ -22,7 +22,7 @@ func Test_DAGraph(T *testing.T) {
 
 	CreateTestGraph(&dg)
 
-	expected := nodes.Nodes{}
+	expected := nodes.NewNodes()
 	expected.Add(dg.Node("A"))
 	expected.Add(dg.Node("B"))
 
@@ -37,7 +37,7 @@ func Test_UAGraph(T *testing.T) {
 
 	CreateTestGraph(&dg)
 
-	expected := nodes.Nodes{}
+	expected := nodes.NewNodes()
 	expected.Add(dg.Node("A"))
 	expected.Add(dg.Node("B"))
 	expected.Add(dg.Node("C"))
