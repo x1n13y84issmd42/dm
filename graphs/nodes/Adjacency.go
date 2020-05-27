@@ -4,6 +4,7 @@ package nodes
 type IAdjacency interface {
 	AdjacentNodes(n INode) *Nodes
 	GetNode(nID NodeID) INode
+	GetEdges(nID NodeID) []IEdge
 }
 
 // AdjacencyWList is a weighted adjacency list. Used for weighted edges.

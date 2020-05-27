@@ -2,9 +2,11 @@ package iterator
 
 import "github.com/x1n13y84issmd42/dm/graphs/nodes"
 
-// Channel is a channel to deliver items while iterating.
-// Exists to have a natural range syntax.
-type Channel chan nodes.INode
+// NChannel is a channel to iterate over nodes.
+type NChannel chan nodes.INode
+
+// EChannel is a channel to iterate over edges.
+type EChannel chan nodes.IEdge
 
 // NodeStack is a slice of nodes.
 type NodeStack []nodes.INode

@@ -6,12 +6,14 @@ import "github.com/x1n13y84issmd42/dm/graphs/nodes"
 type IGraph interface {
 	AddEdge(v1 nodes.INode, v2 nodes.INode)
 	Node(nID nodes.NodeID) nodes.INode
+	OutEdges(nID nodes.NodeID) []nodes.IEdge
 }
 
 // IWGraph is an interface for weighted graphs.
 type IWGraph interface {
 	AddEdge(v1 nodes.INode, w float64, v2 nodes.INode)
 	Node(nID nodes.NodeID) nodes.INode
+	OutEdges(nID nodes.NodeID) []nodes.IEdge
 }
 
 // DAGraph is an unweighted directed graph represented as an adjacency list.
@@ -58,6 +60,11 @@ func (graph *DAGraph) Node(nID nodes.NodeID) nodes.INode {
 	return graph.A.GetNode(nID)
 }
 
+// OutEdges returns a list of outbound edges for a node defined by nID.
+func (graph *DAGraph) OutEdges(nID nodes.NodeID) []nodes.IEdge {
+	return graph.A.GetEdges(nID)
+}
+
 // AddEdge creates an edge between v1 and v2 nodes.
 func (graph *UAGraph) AddEdge(v1 nodes.INode, v2 nodes.INode) {
 	graph.A.AddEdge(v1, v2)
@@ -67,4 +74,9 @@ func (graph *UAGraph) AddEdge(v1 nodes.INode, v2 nodes.INode) {
 // Node returns a node instance by it's ID.
 func (graph *UAGraph) Node(nID nodes.NodeID) nodes.INode {
 	return graph.A.GetNode(nID)
+}
+
+// OutEdges returns a list of outbound edges for a node defined by nID.
+func (graph *UAGraph) OutEdges(nID nodes.NodeID) []nodes.IEdge {
+	return graph.A.GetEdges(nID)
 }

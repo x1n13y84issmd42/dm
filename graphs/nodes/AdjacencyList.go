@@ -54,3 +54,19 @@ func (list *AdjacencyList) GetNode(nID NodeID) INode {
 
 	return nil
 }
+
+// GetEdges returns a list of outbound edges for a node defined by nID.
+func (list *AdjacencyList) GetEdges(nID NodeID) []IEdge {
+	res := []IEdge{}
+	if list.Nodes.Has(nID) {
+		n := list.Nodes.Get(nID)
+		for na := range n.Adjacent().Range() {
+			res = append(res, Edge{
+				A: n,
+				B: na,
+			})
+		}
+	}
+
+	return res
+}
