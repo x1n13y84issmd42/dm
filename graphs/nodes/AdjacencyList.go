@@ -9,16 +9,16 @@ type AdjacencyList struct {
 	List  adjList
 }
 
-func (list *AdjacencyList) init() {
-	if list.List == nil {
-		list.Nodes = NewNodes()
-		list.List = adjList{}
+// NewAdjacencyList creates a new AdjacencyList instance.
+func NewAdjacencyList() *AdjacencyList {
+	return &AdjacencyList{
+		Nodes: NewNodes(),
+		List:  adjList{},
 	}
 }
 
 // AddEdge adds a v2 to the adjacency list of v1.
 func (list *AdjacencyList) AddEdge(v1 INode, v2 INode) {
-	list.init()
 	if list.List[v1.ID()] == nil {
 		list.List[v1.ID()] = NewNodes()
 	}
@@ -31,13 +31,14 @@ func (list *AdjacencyList) AddEdge(v1 INode, v2 INode) {
 
 	list.Nodes.Add(v1)
 	list.Nodes.Add(v2)
+	v1.SetAdjacency(list)
+	v2.SetAdjacency(list)
 
 	list.List[v1.ID()].Add(v2)
 }
 
 // AdjacentNodes returns a set of nodes adjacent to n.
 func (list *AdjacencyList) AdjacentNodes(n INode) *Nodes {
-	list.init()
 	if list.List[n.ID()] != nil {
 		return list.List[n.ID()]
 	}
@@ -47,7 +48,6 @@ func (list *AdjacencyList) AdjacentNodes(n INode) *Nodes {
 
 // GetNode returns a node instance by it's ID.
 func (list *AdjacencyList) GetNode(nID NodeID) INode {
-	list.init()
 	if list.Nodes.Has(nID) {
 		return list.Nodes.Get(nID)
 	}

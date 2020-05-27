@@ -18,9 +18,9 @@ func CreateTestGraph(graph IGraph) {
 }
 
 func Test_DAGraph(T *testing.T) {
-	dg := DAGraph{}
+	dg := NewDAGraph()
 
-	CreateTestGraph(&dg)
+	CreateTestGraph(dg)
 
 	expected := nodes.NewNodes()
 	expected.Add(dg.Node("A"))
@@ -33,9 +33,9 @@ func Test_DAGraph(T *testing.T) {
 }
 
 func Test_UAGraph(T *testing.T) {
-	dg := UAGraph{}
+	dg := NewUAGraph()
 
-	CreateTestGraph(&dg)
+	CreateTestGraph(dg)
 
 	expected := nodes.NewNodes()
 	expected.Add(dg.Node("A"))

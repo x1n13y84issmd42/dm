@@ -1,11 +1,10 @@
-package graphs
+package iterator
 
 import (
 	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/x1n13y84issmd42/dm/graphs/iterator"
 	"github.com/x1n13y84issmd42/dm/graphs/nodes"
 	"github.com/x1n13y84issmd42/dm/graphs/ut"
 )
@@ -20,7 +19,7 @@ func (node *TestNode) ID() nodes.NodeID {
 }
 
 func Test_BFS_1(T *testing.T) {
-	dg := DAGraph{}
+	al := nodes.NewAdjacencyList()
 
 	root := ut.Node("L0")
 	L10 := ut.Node("L10")
@@ -29,20 +28,19 @@ func Test_BFS_1(T *testing.T) {
 	L11 := ut.Node("L11")
 	L21 := ut.Node("L21")
 
-	dg.AddEdge(root, L10)
-	dg.AddEdge(L10, L20)
-	dg.AddEdge(L20, L30)
+	al.AddEdge(root, L10)
+	al.AddEdge(L10, L20)
+	al.AddEdge(L20, L30)
 
-	dg.AddEdge(root, L11)
-	dg.AddEdge(L11, L21)
+	al.AddEdge(root, L11)
+	al.AddEdge(L11, L21)
 
-	dg.AddEdge(root, ut.Node("L12"))
+	al.AddEdge(root, ut.Node("L12"))
 
 	expected := "L0L10L11L12L20L21L30"
 	actual := ""
 
-	//TODO: Sometimes it produces invalid order and fails.
-	for node := range iterator.BFS(root) {
+	for node := range BFS(root) {
 		actual = fmt.Sprintf("%s%s", actual, node.(*ut.TestNode).Name)
 	}
 
@@ -53,14 +51,14 @@ func Test_BFS_Loop(T *testing.T) {
 	root := ut.Node("L0")
 	L10 := ut.Node("L10")
 
-	g := DAGraph{}
-	g.AddEdge(root, L10)
-	g.AddEdge(L10, root)
+	al := nodes.NewAdjacencyList()
+	al.AddEdge(root, L10)
+	al.AddEdge(L10, root)
 
 	expected := "L0L10"
 	actual := ""
 
-	for node := range iterator.BFS(root) {
+	for node := range BFS(root) {
 		actual = fmt.Sprintf("%s%s", actual, node.(*ut.TestNode).Name)
 	}
 

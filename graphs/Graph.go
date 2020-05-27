@@ -16,28 +16,40 @@ type IWGraph interface {
 
 // DAGraph is an unweighted directed graph represented as an adjacency list.
 type DAGraph struct {
-	A nodes.AdjacencyList
+	A *nodes.AdjacencyList
 }
 
 // UAGraph is an unweighted undirected graph represented as an adjacency list.
 type UAGraph struct {
-	A nodes.AdjacencyList
+	A *nodes.AdjacencyList
 }
 
 // WDAGraph is a weighted directed graph represented as an adjacency list.
 type WDAGraph struct {
-	A nodes.AdjacencyList
+	A *nodes.AdjacencyList
 }
 
 // WUAGraph is a weighted undirected graph represented as an adjacency list.
 type WUAGraph struct {
-	A nodes.AdjacencyList
+	A *nodes.AdjacencyList
+}
+
+// NewDAGraph creates a new DAGraph instance.
+func NewDAGraph() *DAGraph {
+	return &DAGraph{
+		A: nodes.NewAdjacencyList(),
+	}
+}
+
+// NewUAGraph creates a new UAGraph instance.
+func NewUAGraph() *UAGraph {
+	return &UAGraph{
+		A: nodes.NewAdjacencyList(),
+	}
 }
 
 // AddEdge creates an edge between v1 and v2 nodes.
 func (graph *DAGraph) AddEdge(v1 nodes.INode, v2 nodes.INode) {
-	v1.SetAdjacency(&graph.A)
-	v2.SetAdjacency(&graph.A)
 	graph.A.AddEdge(v1, v2)
 }
 
@@ -48,8 +60,6 @@ func (graph *DAGraph) Node(nID nodes.NodeID) nodes.INode {
 
 // AddEdge creates an edge between v1 and v2 nodes.
 func (graph *UAGraph) AddEdge(v1 nodes.INode, v2 nodes.INode) {
-	v1.SetAdjacency(&graph.A)
-	v2.SetAdjacency(&graph.A)
 	graph.A.AddEdge(v1, v2)
 	graph.A.AddEdge(v2, v1)
 }
