@@ -1,6 +1,8 @@
 package iterator
 
-import "github.com/x1n13y84issmd42/dm/graphs/nodes"
+import (
+	"github.com/x1n13y84issmd42/dm/graphs/nodes"
+)
 
 // DFS creates a depth-first search iterator.
 func DFS(root nodes.INode) Channel {

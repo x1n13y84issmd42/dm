@@ -5,17 +5,17 @@ type Nodes map[NodeID]INode
 
 // Add adds a node to the set and returns true if it had been inserted for the first time.
 func (set *Nodes) Add(n INode) bool {
-	had := set.Has(n)
+	had := set.Has(n.ID())
 	(*set)[n.ID()] = n
-	return had
+	return !had
 }
 
 // Remove removes a node from the set.
-func (set *Nodes) Remove(n INode) {}
+func (set *Nodes) Remove(nID NodeID) {}
 
 // Has tells whether a node is present in the set.
-func (set *Nodes) Has(n INode) bool {
-	_, ok := (*set)[n.ID()]
+func (set *Nodes) Has(nID NodeID) bool {
+	_, ok := (*set)[nID]
 	return ok
 }
 

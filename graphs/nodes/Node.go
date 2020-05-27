@@ -8,39 +8,50 @@ type INode interface {
 	ID() NodeID
 	Adjacent() Nodes
 
+	SetAdjacency(a IAdjacency)
+
+	// DEPRECATED
 	Add(n INode) INode
 }
 
 // Node is a directed graph node.
 type Node struct {
+	INode
+	A IAdjacency
+
+	// DEPRECATED
 	ChildNodes Nodes
 }
 
+// init is DEPRECATED
 func (node *Node) init() {
 	if node.ChildNodes == nil {
 		node.ChildNodes = Nodes{}
 	}
 }
 
-// Add adds a child node.
+// Add adds a child node. And it's DEPRECATED.
 func (node *Node) Add(n INode) INode {
 	node.init()
 	node.ChildNodes.Add(n)
 	return n
 }
 
-// NumChildren returns number of child nodes.
+// NumChildren returns number of child nodes. And it's DEPRECATED.
 func (node *Node) NumChildren() int {
 	node.init()
 	return node.ChildNodes.Count()
 }
 
-// Adjacent returns all the child nodes.
-func (node *Node) Adjacent() Nodes {
-	node.init()
-	return node.ChildNodes
+// SetAdjacency sets the graph-specific adjacency implementation.
+func (node *Node) SetAdjacency(a IAdjacency) {
+	node.A = a
 }
 
-// GhostNode is a Flyweight node used with various representations of graphs.
-type GhostNode struct {
+// Adjacent returns all the adjacent nodes.
+func (node *Node) Adjacent() Nodes {
+	node.init()
+	var inode interface{}
+	inode = node
+	return node.A.AdjacentNodes(inode.(INode))
 }
