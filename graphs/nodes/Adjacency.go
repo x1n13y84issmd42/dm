@@ -1,11 +1,17 @@
 package nodes
 
-// IAdjacency is a lower-level interface to access basic
+// IAdjacency is an interface to access node's adjacency info.
 type IAdjacency interface {
-	AdjacentNodes(n INode) *Nodes
-	GetNode(nID NodeID) INode
-	GetEdges(nID NodeID) []IEdge
+	AddEdge(v1 Node, v2 Node)
+	Node(nID NodeID) Node
+	AdjacentNodes(nID NodeID) *Nodes
+	OutEdges(nID NodeID) []IEdge
 }
 
-// AdjacencyWList is a weighted adjacency list. Used for weighted edges.
-// type AdjacencyWList map[INode][]IWNode
+// IWAdjacency the same as IAdjacency, but for weighted nodes.
+type IWAdjacency interface {
+	AddEdge(v1 Node, w float64, v2 Node)
+	Node(nID NodeID) Node
+	AdjacentNodes(nID NodeID) *Nodes
+	OutEdges(nID NodeID) []IEdge
+}

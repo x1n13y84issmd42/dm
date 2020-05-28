@@ -18,7 +18,7 @@ func NewAdjacencyList() *AdjacencyList {
 }
 
 // AddEdge adds a v2 to the adjacency list of v1.
-func (list *AdjacencyList) AddEdge(v1 INode, v2 INode) {
+func (list *AdjacencyList) AddEdge(v1 Node, v2 Node) {
 	if list.List[v1.ID()] == nil {
 		list.List[v1.ID()] = NewNodes()
 	}
@@ -31,23 +31,21 @@ func (list *AdjacencyList) AddEdge(v1 INode, v2 INode) {
 
 	list.Nodes.Add(v1)
 	list.Nodes.Add(v2)
-	v1.SetAdjacency(list)
-	v2.SetAdjacency(list)
 
 	list.List[v1.ID()].Add(v2)
 }
 
 // AdjacentNodes returns a set of nodes adjacent to n.
-func (list *AdjacencyList) AdjacentNodes(n INode) *Nodes {
-	if list.List[n.ID()] != nil {
-		return list.List[n.ID()]
+func (list *AdjacencyList) AdjacentNodes(nID NodeID) *Nodes {
+	if list.List[nID] != nil {
+		return list.List[nID]
 	}
 
 	return NewNodes()
 }
 
-// GetNode returns a node instance by it's ID.
-func (list *AdjacencyList) GetNode(nID NodeID) INode {
+// Node returns a node instance by it's ID.
+func (list *AdjacencyList) Node(nID NodeID) Node {
 	if list.Nodes.Has(nID) {
 		return list.Nodes.Get(nID)
 	}
@@ -55,18 +53,18 @@ func (list *AdjacencyList) GetNode(nID NodeID) INode {
 	return nil
 }
 
-// GetEdges returns a list of outbound edges for a node defined by nID.
-func (list *AdjacencyList) GetEdges(nID NodeID) []IEdge {
+// OutEdges returns a list of outbound edges for a node defined by nID.
+func (list *AdjacencyList) OutEdges(nID NodeID) []IEdge {
 	res := []IEdge{}
-	if list.Nodes.Has(nID) {
-		n := list.Nodes.Get(nID)
-		for na := range n.Adjacent().Range() {
-			res = append(res, Edge{
-				A: n,
-				B: na,
-			})
-		}
-	}
+	// if list.Nodes.Has(nID) {
+	// 	n := list.Nodes.Get(nID)
+	// 	for na := range n.Adjacent().Range() {
+	// 		res = append(res, Edge{
+	// 			A: n,
+	// 			B: na,
+	// 		})
+	// 	}
+	// }
 
 	return res
 }

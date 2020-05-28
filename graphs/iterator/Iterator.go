@@ -3,26 +3,26 @@ package iterator
 import "github.com/x1n13y84issmd42/dm/graphs/nodes"
 
 // NChannel is a channel to iterate over nodes.
-type NChannel chan nodes.INode
+type NChannel chan nodes.Node
 
 // EChannel is a channel to iterate over edges.
 type EChannel chan nodes.IEdge
 
 // NodeStack is a slice of nodes.
-type NodeStack []nodes.INode
+type NodeStack []nodes.Node
 
 // Push adds a node to the end of the stack.
-func (stack *NodeStack) Push(node nodes.INode) {
+func (stack *NodeStack) Push(node nodes.Node) {
 	*stack = append(*stack, node)
 }
 
 // Append appends a list of nodes to the end of the stack.
-func (stack *NodeStack) Append(nodes []nodes.INode) {
+func (stack *NodeStack) Append(nodes []nodes.Node) {
 	*stack = append(*stack, nodes...)
 }
 
 // PopFront removes the first node from the stack and returns it.
-func (stack *NodeStack) PopFront() nodes.INode {
+func (stack *NodeStack) PopFront() nodes.Node {
 	s := *stack
 	if len(s) >= 1 {
 		res := s[0]
@@ -35,4 +35,4 @@ func (stack *NodeStack) PopFront() nodes.INode {
 
 // NodeVisitedMap is a map of visited nodes.
 // Used in iterators.
-type NodeVisitedMap map[nodes.INode]bool
+type NodeVisitedMap map[nodes.NodeID]bool

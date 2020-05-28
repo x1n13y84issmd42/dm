@@ -7,7 +7,6 @@ import (
 )
 
 type testNode struct {
-	Node
 	Name string
 }
 
@@ -17,11 +16,8 @@ func (node *testNode) ID() NodeID {
 
 func tnode(name string) *testNode {
 	node := testNode{
-		Node: Node{},
 		Name: name,
 	}
-
-	node.Node.INode = &node
 
 	return &node
 }

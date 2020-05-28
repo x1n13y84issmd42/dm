@@ -7,8 +7,8 @@ type IEdge interface {
 
 // Edge is a pair of nodes.
 type Edge struct {
-	A INode
-	B INode
+	A Node
+	B Node
 }
 
 // WEdge is a weighted edge.

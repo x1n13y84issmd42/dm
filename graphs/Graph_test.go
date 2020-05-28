@@ -26,8 +26,7 @@ func Test_DAGraph(T *testing.T) {
 	expected.Add(dg.Node("A"))
 	expected.Add(dg.Node("B"))
 
-	root := dg.Node("R007")
-	actual := root.Adjacent()
+	actual := dg.AdjacentNodes("R007")
 
 	assert.Equal(T, expected, actual)
 }
@@ -43,8 +42,7 @@ func Test_UAGraph(T *testing.T) {
 	expected.Add(dg.Node("C"))
 	expected.Add(dg.Node("D"))
 
-	root := dg.Node("R007")
-	actual := root.Adjacent()
+	actual := dg.AdjacentNodes("R007")
 
 	assert.Equal(T, expected, actual)
 }

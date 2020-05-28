@@ -4,7 +4,6 @@ import "github.com/x1n13y84issmd42/dm/graphs/nodes"
 
 // TestNode ...
 type TestNode struct {
-	nodes.Node
 	Name string
 }
 
@@ -16,11 +15,8 @@ func (node *TestNode) ID() nodes.NodeID {
 // Node ...
 func Node(name string) *TestNode {
 	node := TestNode{
-		Node: nodes.Node{},
 		Name: name,
 	}
-
-	node.Node.INode = &node
 
 	return &node
 }

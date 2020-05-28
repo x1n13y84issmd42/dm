@@ -6,18 +6,18 @@ import (
 
 // Nodes is a set of INode instances.
 type Nodes struct {
-	Map map[NodeID]INode
+	Map map[NodeID]Node
 }
 
 // NewNodes creates a new node set instance.
 func NewNodes() *Nodes {
 	return &Nodes{
-		Map: make(map[NodeID]INode),
+		Map: make(map[NodeID]Node),
 	}
 }
 
 // Add adds a node to the set and returns true if it had been inserted for the first time.
-func (set *Nodes) Add(n INode) bool {
+func (set *Nodes) Add(n Node) bool {
 	had := set.Has(n.ID())
 	set.Map[n.ID()] = n
 	return had
@@ -37,7 +37,7 @@ func (set *Nodes) Has(nID NodeID) bool {
 }
 
 // Get returns a node from the set.
-func (set *Nodes) Get(nID NodeID) INode {
+func (set *Nodes) Get(nID NodeID) Node {
 	return set.Map[nID]
 }
 
@@ -56,8 +56,8 @@ func (set Nodes) Clone() *Nodes {
 }
 
 // Values creates a slice of values taken from the set.
-func (set Nodes) Values() []INode {
-	res := []INode{}
+func (set Nodes) Values() []Node {
+	res := []Node{}
 	for n := range set.Range() {
 		res = append(res, n)
 	}
@@ -66,11 +66,11 @@ func (set Nodes) Values() []INode {
 
 // Channel is a channel to deliver items while iterating.
 // Exists to have a natural range syntax.
-type Channel chan INode
+type Channel chan Node
 
 // Range is an attempt to make iteration over a map-based set stable in terms of order.
 func (set Nodes) Range() Channel {
-	ch := make(chan INode)
+	ch := make(chan Node)
 	go func() {
 		// Collecting keys.
 		keys := []string{}

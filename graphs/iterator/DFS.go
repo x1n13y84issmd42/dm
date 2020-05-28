@@ -4,39 +4,40 @@ import (
 	"github.com/x1n13y84issmd42/dm/graphs/nodes"
 )
 
-// DFS creates a depth-first search iterator to traverse nodes.
-func DFS(root nodes.INode) NChannel {
+// DFS creates a depth-first search iterator to traverse the graph.
+func DFS(graph nodes.IAdjacency, root nodes.NodeID) NChannel {
 	ch := make(NChannel)
 	go func() {
 		visited := NodeVisitedMap{}
-		traverseDFS(root, ch, &visited, false)
+		traverseDFS(graph, graph.Node(root), ch, &visited, false)
 		close(ch)
 	}()
 	return ch
 }
 
-func traverseDFS(node nodes.INode, ch NChannel, visited *NodeVisitedMap, postorder bool) {
-	if (*visited)[node] {
+func traverseDFS(graph nodes.IAdjacency, node nodes.Node, ch NChannel, visited *NodeVisitedMap, postorder bool) {
+	nID := node.ID()
+	if (*visited)[nID] {
 		return
 	}
 
 	if !postorder {
 		ch <- node
-		(*visited)[node] = true
+		(*visited)[nID] = true
 	}
 
-	for n := range node.Adjacent().Range() {
-		traverseDFS(n, ch, visited, postorder)
+	for n := range graph.AdjacentNodes(nID).Range() {
+		traverseDFS(graph, n, ch, visited, postorder)
 	}
 
 	if postorder {
 		ch <- node
-		(*visited)[node] = true
+		(*visited)[nID] = true
 	}
 }
 
-// EDFS creates a depth-first search iterator to traverse edges.
-func EDFS(root nodes.INode) EChannel {
+/* // EDFS creates a depth-first search iterator to traverse edges.
+func EDFS(root nodes.Node) EChannel {
 	ch := make(EChannel)
 	go func() {
 		visited := NodeVisitedMap{}
@@ -46,7 +47,7 @@ func EDFS(root nodes.INode) EChannel {
 	return ch
 }
 
-func traverseEDFS(node nodes.INode, ch EChannel, visited *NodeVisitedMap) {
+func traverseEDFS(node nodes.Node, ch EChannel, visited *NodeVisitedMap) {
 	if (*visited)[node] {
 		return
 	}
@@ -57,4 +58,4 @@ func traverseEDFS(node nodes.INode, ch EChannel, visited *NodeVisitedMap) {
 		// ch <- Edge
 		traverseEDFS(n, ch, visited)
 	}
-}
+} */

@@ -20,7 +20,7 @@ func Test_NodeStack(T *testing.T) {
 	})
 
 	T.Run("Append", func(T *testing.T) {
-		stack.Append([]nodes.INode{
+		stack.Append([]nodes.Node{
 			ut.Node("1"),
 			ut.Node("2"),
 			ut.Node("3"),
