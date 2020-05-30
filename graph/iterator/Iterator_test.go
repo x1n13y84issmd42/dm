@@ -4,8 +4,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/x1n13y84issmd42/dm/graphs/nodes"
-	"github.com/x1n13y84issmd42/dm/graphs/ut"
+	"github.com/x1n13y84issmd42/dm/graph/nodes"
+	"github.com/x1n13y84issmd42/dm/graph/ut"
 )
 
 func Test_NodeStack(T *testing.T) {

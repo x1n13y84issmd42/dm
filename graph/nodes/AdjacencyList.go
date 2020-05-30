@@ -19,12 +19,15 @@ func NewAdjacencyList() *AdjacencyList {
 
 // AddEdge adds a v2 to the adjacency list of v1.
 func (list *AdjacencyList) AddEdge(v1 Node, v2 Node) {
-	if list.List[v1.ID()] == nil {
-		list.List[v1.ID()] = NewNodes()
+	v1ID := v1.ID()
+	v2ID := v2.ID()
+
+	if list.List[v1ID] == nil {
+		list.List[v1ID] = NewNodes()
 	}
 
-	for n := range list.List[v1.ID()].Range() {
-		if n.ID() == v2.ID() {
+	for n := range list.List[v1ID].Range() {
+		if n.ID() == v2ID {
 			return
 		}
 	}
@@ -32,7 +35,7 @@ func (list *AdjacencyList) AddEdge(v1 Node, v2 Node) {
 	list.Nodes.Add(v1)
 	list.Nodes.Add(v2)
 
-	list.List[v1.ID()].Add(v2)
+	list.List[v1ID].Add(v2)
 }
 
 // AdjacentNodes returns a set of nodes adjacent to n.

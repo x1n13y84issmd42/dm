@@ -1,11 +1,11 @@
 package iterator
 
 import (
-	"github.com/x1n13y84issmd42/dm/graphs/nodes"
+	"github.com/x1n13y84issmd42/dm/graph/nodes"
 )
 
 // DFS creates a depth-first search iterator to traverse the graph.
-func DFS(graph nodes.IAdjacency, root nodes.NodeID) NChannel {
+func DFS(graph nodes.NodeAccess, root nodes.NodeID) NChannel {
 	ch := make(NChannel)
 	go func() {
 		visited := NodeVisitedMap{}
@@ -15,7 +15,7 @@ func DFS(graph nodes.IAdjacency, root nodes.NodeID) NChannel {
 	return ch
 }
 
-func traverseDFS(graph nodes.IAdjacency, node nodes.Node, ch NChannel, visited *NodeVisitedMap, postorder bool) {
+func traverseDFS(graph nodes.NodeAccess, node nodes.Node, ch NChannel, visited *NodeVisitedMap, postorder bool) {
 	nID := node.ID()
 	if (*visited)[nID] {
 		return

@@ -5,12 +5,12 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/x1n13y84issmd42/dm/graphs"
-	"github.com/x1n13y84issmd42/dm/graphs/ut"
+	"github.com/x1n13y84issmd42/dm/graph"
+	"github.com/x1n13y84issmd42/dm/graph/ut"
 )
 
-func Test_DFS_1(T *testing.T) {
-	g := graphs.NewDAGraph()
+func Test_BFS_1(T *testing.T) {
+	g := graph.NewDGraph()
 
 	root := ut.Node("L0")
 	L10 := ut.Node("L10")
@@ -28,28 +28,28 @@ func Test_DFS_1(T *testing.T) {
 
 	g.AddEdge(root, ut.Node("L12"))
 
-	expected := "L0L10L20L30L11L21L12"
+	expected := "L0L10L11L12L20L21L30"
 	actual := ""
 
-	for node := range DFS(g, "L0") {
+	for node := range BFS(g, "L0") {
 		actual = fmt.Sprintf("%s%s", actual, node.(*ut.TestNode).Name)
 	}
 
 	assert.Equal(T, expected, actual)
 }
 
-func Test_DFS_Loop(T *testing.T) {
+func Test_BFS_Loop(T *testing.T) {
 	root := ut.Node("L0")
 	L10 := ut.Node("L10")
 
-	g := graphs.NewDAGraph()
+	g := graph.NewDGraph()
 	g.AddEdge(root, L10)
 	g.AddEdge(L10, root)
 
 	expected := "L0L10"
 	actual := ""
 
-	for node := range DFS(g, "L0") {
+	for node := range BFS(g, "L0") {
 		actual = fmt.Sprintf("%s%s", actual, node.(*ut.TestNode).Name)
 	}
 

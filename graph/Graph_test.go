@@ -1,11 +1,11 @@
-package graphs
+package graph
 
 import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/x1n13y84issmd42/dm/graphs/nodes"
-	"github.com/x1n13y84issmd42/dm/graphs/ut"
+	"github.com/x1n13y84issmd42/dm/graph/nodes"
+	"github.com/x1n13y84issmd42/dm/graph/ut"
 )
 
 func CreateTestGraph(graph IGraph) {
@@ -18,7 +18,7 @@ func CreateTestGraph(graph IGraph) {
 }
 
 func Test_DAGraph(T *testing.T) {
-	dg := NewDAGraph()
+	dg := NewDGraph()
 
 	CreateTestGraph(dg)
 
@@ -32,7 +32,7 @@ func Test_DAGraph(T *testing.T) {
 }
 
 func Test_UAGraph(T *testing.T) {
-	dg := NewUAGraph()
+	dg := NewUGraph()
 
 	CreateTestGraph(dg)
 

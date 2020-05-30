@@ -1,17 +1,20 @@
 package nodes
 
-// IAdjacency is an interface to access node's adjacency info.
-type IAdjacency interface {
-	AddEdge(v1 Node, v2 Node)
+// NodeAccess is an interface to node access within graph.
+type NodeAccess interface {
 	Node(nID NodeID) Node
 	AdjacentNodes(nID NodeID) *Nodes
 	OutEdges(nID NodeID) []IEdge
 }
 
+// IAdjacency is an interface to access node's adjacency info.
+type IAdjacency interface {
+	NodeAccess
+	AddEdge(v1 Node, v2 Node)
+}
+
 // IWAdjacency the same as IAdjacency, but for weighted nodes.
 type IWAdjacency interface {
+	NodeAccess
 	AddEdge(v1 Node, w float64, v2 Node)
-	Node(nID NodeID) Node
-	AdjacentNodes(nID NodeID) *Nodes
-	OutEdges(nID NodeID) []IEdge
 }

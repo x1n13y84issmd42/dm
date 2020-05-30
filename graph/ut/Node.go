@@ -1,6 +1,6 @@
 package ut
 
-import "github.com/x1n13y84issmd42/dm/graphs/nodes"
+import "github.com/x1n13y84issmd42/dm/graph/nodes"
 
 // TestNode ...
 type TestNode struct {

@@ -1,6 +1,6 @@
 package iterator
 
-import "github.com/x1n13y84issmd42/dm/graphs/nodes"
+import "github.com/x1n13y84issmd42/dm/graph/nodes"
 
 // NChannel is a channel to iterate over nodes.
 type NChannel chan nodes.Node

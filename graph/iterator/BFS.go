@@ -1,11 +1,11 @@
 package iterator
 
 import (
-	"github.com/x1n13y84issmd42/dm/graphs/nodes"
+	"github.com/x1n13y84issmd42/dm/graph/nodes"
 )
 
 // BFS creates a breadth-first search iterator to traverse nodes.
-func BFS(graph nodes.IAdjacency, root nodes.NodeID) NChannel {
+func BFS(graph nodes.NodeAccess, root nodes.NodeID) NChannel {
 	ch := make(NChannel)
 	stack := NodeStack{}
 	go func() {
@@ -18,7 +18,7 @@ func BFS(graph nodes.IAdjacency, root nodes.NodeID) NChannel {
 	return ch
 }
 
-func traverseBFS(graph nodes.IAdjacency, ch NChannel, stack *NodeStack, visited *NodeVisitedMap) {
+func traverseBFS(graph nodes.NodeAccess, ch NChannel, stack *NodeStack, visited *NodeVisitedMap) {
 	for len(*stack) > 0 {
 		node := stack.PopFront()
 		nID := node.ID()

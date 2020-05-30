@@ -1,8 +1,8 @@
-package graphs
+package graph
 
 import (
-	// "github.com/x1n13y84issmd42/dm/graphs/iterator"
-	"github.com/x1n13y84issmd42/dm/graphs/nodes"
+	// "github.com/x1n13y84issmd42/dm/graph/iterator"
+	"github.com/x1n13y84issmd42/dm/graph/nodes"
 )
 
 // KosarajuSCC finds strongly connected components of a graph using the Sambasiva Rao Kosaraju's algorithm.
