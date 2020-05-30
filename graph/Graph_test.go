@@ -1,9 +1,10 @@
-package graph
+package graph_test
 
 import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/x1n13y84issmd42/dm/graph"
 	"github.com/x1n13y84issmd42/dm/graph/collection"
 	"github.com/x1n13y84issmd42/dm/graph/contract"
 	"github.com/x1n13y84issmd42/dm/graph/ut"
@@ -19,7 +20,7 @@ func CreateTestGraph(graph contract.Graph) {
 }
 
 func Test_DAGraph(T *testing.T) {
-	dg := NewDGraph()
+	dg := graph.NewDGraph()
 
 	CreateTestGraph(dg)
 
@@ -33,7 +34,7 @@ func Test_DAGraph(T *testing.T) {
 }
 
 func Test_UAGraph(T *testing.T) {
-	dg := NewUGraph()
+	dg := graph.NewUGraph()
 
 	CreateTestGraph(dg)
 

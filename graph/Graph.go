@@ -2,6 +2,7 @@ package graph
 
 import (
 	"github.com/x1n13y84issmd42/dm/graph/contract"
+	"github.com/x1n13y84issmd42/dm/graph/iterator"
 	"github.com/x1n13y84issmd42/dm/graph/storage"
 )
 
@@ -59,6 +60,16 @@ func (graph *DGraph) AdjacentNodes(nID contract.NodeID) contract.Nodes {
 	return graph.A.AdjacentNodes(nID)
 }
 
+// DFS returns a DFS node iterator.
+func (graph *DGraph) DFS(nID contract.NodeID) contract.NChannel {
+	return iterator.DFS(graph, nID)
+}
+
+// BFS returns a BFS node iterator.
+func (graph *DGraph) BFS(nID contract.NodeID) contract.NChannel {
+	return iterator.BFS(graph, nID)
+}
+
 // AddEdge creates an edge between v1 and v2 nodes.
 func (graph *UGraph) AddEdge(v1 contract.Node, v2 contract.Node) {
 	graph.A.AddEdge(v1, v2)
@@ -78,4 +89,14 @@ func (graph *UGraph) OutEdges(nID contract.NodeID) []contract.Edge {
 // AdjacentNodes returns a list of adjacent nodes for a node defined by nID.
 func (graph *UGraph) AdjacentNodes(nID contract.NodeID) contract.Nodes {
 	return graph.A.AdjacentNodes(nID)
+}
+
+// DFS returns a DFS node iterator.
+func (graph *UGraph) DFS(nID contract.NodeID) contract.NChannel {
+	return iterator.DFS(graph, nID)
+}
+
+// BFS returns a BFS node iterator.
+func (graph *UGraph) BFS(nID contract.NodeID) contract.NChannel {
+	return iterator.BFS(graph, nID)
 }

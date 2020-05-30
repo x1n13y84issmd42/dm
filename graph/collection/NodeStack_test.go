@@ -1,15 +1,16 @@
-package collection
+package collection_test
 
 import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/x1n13y84issmd42/dm/graph/collection"
 	"github.com/x1n13y84issmd42/dm/graph/contract"
 	"github.com/x1n13y84issmd42/dm/graph/ut"
 )
 
 func Test_NodeStack(T *testing.T) {
-	stack := NodeStack{}
+	stack := collection.NodeStack{}
 
 	T.Run("Push", func(T *testing.T) {
 		stack.Push(ut.Node("a"))

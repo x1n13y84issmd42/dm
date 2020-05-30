@@ -1,4 +1,4 @@
-package iterator
+package iterator_test
 
 import (
 	"fmt"
@@ -6,6 +6,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/x1n13y84issmd42/dm/graph"
+	"github.com/x1n13y84issmd42/dm/graph/iterator"
 	"github.com/x1n13y84issmd42/dm/graph/ut"
 )
 
@@ -31,7 +32,7 @@ func Test_DFS_1(T *testing.T) {
 	expected := "L0L10L20L30L11L21L12"
 	actual := ""
 
-	for node := range DFS(g, "L0") {
+	for node := range iterator.DFS(g, "L0") {
 		actual = fmt.Sprintf("%s%s", actual, node.(*ut.TestNode).Name)
 	}
 
@@ -49,7 +50,7 @@ func Test_DFS_Loop(T *testing.T) {
 	expected := "L0L10"
 	actual := ""
 
-	for node := range DFS(g, "L0") {
+	for node := range iterator.DFS(g, "L0") {
 		actual = fmt.Sprintf("%s%s", actual, node.(*ut.TestNode).Name)
 	}
 

@@ -1,9 +1,10 @@
-package collection
+package collection_test
 
 import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/x1n13y84issmd42/dm/graph/collection"
 	"github.com/x1n13y84issmd42/dm/graph/contract"
 )
 
@@ -24,7 +25,7 @@ func tnode(name string) *testNode {
 }
 
 func Test_Set_Add_Get_Remove(T *testing.T) {
-	set := NewNodes()
+	set := collection.NewNodes()
 	assert.Equal(T, 0, set.Count())
 
 	ares := set.Add(tnode("a"))
@@ -48,7 +49,7 @@ func Test_Set_Add_Get_Remove(T *testing.T) {
 }
 
 func Test_Set_Values(T *testing.T) {
-	set := NewNodes()
+	set := collection.NewNodes()
 
 	set.Add(tnode("a"))
 	set.Add(tnode("z"))
@@ -77,7 +78,7 @@ func Test_Set_Values(T *testing.T) {
 }
 
 func Test_Set_Clone(T *testing.T) {
-	set := NewNodes()
+	set := collection.NewNodes()
 
 	set.Add(tnode("a"))
 	set.Add(tnode("z"))
@@ -88,7 +89,7 @@ func Test_Set_Clone(T *testing.T) {
 	set.Add(tnode("z"))
 	set.Add(tnode("z"))
 
-	expected := NewNodes()
+	expected := collection.NewNodes()
 	expected.Add(tnode("a"))
 	expected.Add(tnode("b"))
 	expected.Add(tnode("c"))
