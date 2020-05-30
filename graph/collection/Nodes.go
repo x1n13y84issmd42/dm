@@ -1,43 +1,45 @@
-package nodes
+package collection
 
 import (
 	"sort"
+
+	"github.com/x1n13y84issmd42/dm/graph/contract"
 )
 
 // Nodes is a set of INode instances.
 type Nodes struct {
-	Map map[NodeID]Node
+	Map map[contract.NodeID]contract.Node
 }
 
 // NewNodes creates a new node set instance.
 func NewNodes() *Nodes {
 	return &Nodes{
-		Map: make(map[NodeID]Node),
+		Map: make(map[contract.NodeID]contract.Node),
 	}
 }
 
 // Add adds a node to the set and returns true if it had been inserted for the first time.
-func (set *Nodes) Add(n Node) bool {
+func (set *Nodes) Add(n contract.Node) bool {
 	had := set.Has(n.ID())
 	set.Map[n.ID()] = n
 	return had
 }
 
 // Remove removes a node from the set. Returns true if node was present in the set before removal.
-func (set *Nodes) Remove(nID NodeID) bool {
+func (set *Nodes) Remove(nID contract.NodeID) bool {
 	had := set.Has(nID)
 	delete(set.Map, nID)
 	return had
 }
 
 // Has tells whether a node is present in the set.
-func (set *Nodes) Has(nID NodeID) bool {
+func (set *Nodes) Has(nID contract.NodeID) bool {
 	_, ok := set.Map[nID]
 	return ok
 }
 
 // Get returns a node from the set.
-func (set *Nodes) Get(nID NodeID) Node {
+func (set *Nodes) Get(nID contract.NodeID) contract.Node {
 	return set.Map[nID]
 }
 
@@ -47,7 +49,7 @@ func (set Nodes) Count() int {
 }
 
 // Clone creates a new set by copying the receiver set.
-func (set Nodes) Clone() *Nodes {
+func (set Nodes) Clone() contract.Nodes {
 	res := NewNodes()
 	for _, n := range set.Map {
 		res.Add(n)
@@ -56,21 +58,17 @@ func (set Nodes) Clone() *Nodes {
 }
 
 // Values creates a slice of values taken from the set.
-func (set Nodes) Values() []Node {
-	res := []Node{}
+func (set Nodes) Values() []contract.Node {
+	res := []contract.Node{}
 	for n := range set.Range() {
 		res = append(res, n)
 	}
 	return res
 }
 
-// Channel is a channel to deliver items while iterating.
-// Exists to have a natural range syntax.
-type Channel chan Node
-
-// Range is an attempt to make iteration over a map-based set stable in terms of order.
-func (set Nodes) Range() Channel {
-	ch := make(chan Node)
+// Range iterates over elements in lexicographic key order.
+func (set Nodes) Range() contract.Channel {
+	ch := make(chan contract.Node)
 	go func() {
 		// Collecting keys.
 		keys := []string{}
@@ -82,7 +80,7 @@ func (set Nodes) Range() Channel {
 
 		// Sending values to the channel.
 		for _, k := range keys {
-			ch <- set.Map[NodeID(k)]
+			ch <- set.Map[contract.NodeID(k)]
 		}
 
 		close(ch)

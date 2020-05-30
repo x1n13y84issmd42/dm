@@ -1,21 +1,22 @@
 package iterator
 
 import (
-	"github.com/x1n13y84issmd42/dm/graph/nodes"
+	"github.com/x1n13y84issmd42/dm/graph/collection"
+	"github.com/x1n13y84issmd42/dm/graph/contract"
 )
 
 // DFS creates a depth-first search iterator to traverse the graph.
-func DFS(graph nodes.NodeAccess, root nodes.NodeID) NChannel {
-	ch := make(NChannel)
+func DFS(graph contract.NodeAccess, root contract.NodeID) contract.NChannel {
+	ch := make(contract.NChannel)
 	go func() {
-		visited := NodeVisitedMap{}
+		visited := collection.NodeVisitMap{}
 		traverseDFS(graph, graph.Node(root), ch, &visited, false)
 		close(ch)
 	}()
 	return ch
 }
 
-func traverseDFS(graph nodes.NodeAccess, node nodes.Node, ch NChannel, visited *NodeVisitedMap, postorder bool) {
+func traverseDFS(graph contract.NodeAccess, node contract.Node, ch contract.NChannel, visited *collection.NodeVisitMap, postorder bool) {
 	nID := node.ID()
 	if (*visited)[nID] {
 		return
@@ -40,14 +41,14 @@ func traverseDFS(graph nodes.NodeAccess, node nodes.Node, ch NChannel, visited *
 func EDFS(root nodes.Node) EChannel {
 	ch := make(EChannel)
 	go func() {
-		visited := NodeVisitedMap{}
+		visited := collection.NodeVisitMap{}
 		traverseEDFS(root, ch, &visited)
 		close(ch)
 	}()
 	return ch
 }
 
-func traverseEDFS(node nodes.Node, ch EChannel, visited *NodeVisitedMap) {
+func traverseEDFS(node nodes.Node, ch EChannel, visited *collection.NodeVisitMap) {
 	if (*visited)[node] {
 		return
 	}

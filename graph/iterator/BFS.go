@@ -1,16 +1,17 @@
 package iterator
 
 import (
-	"github.com/x1n13y84issmd42/dm/graph/nodes"
+	"github.com/x1n13y84issmd42/dm/graph/collection"
+	"github.com/x1n13y84issmd42/dm/graph/contract"
 )
 
 // BFS creates a breadth-first search iterator to traverse nodes.
-func BFS(graph nodes.NodeAccess, root nodes.NodeID) NChannel {
-	ch := make(NChannel)
-	stack := NodeStack{}
+func BFS(graph contract.NodeAccess, root contract.NodeID) contract.NChannel {
+	ch := make(contract.NChannel)
+	stack := collection.NodeStack{}
 	go func() {
 		stack.Push(graph.Node(root))
-		visited := NodeVisitedMap{}
+		visited := collection.NodeVisitMap{}
 		traverseBFS(graph, ch, &stack, &visited)
 
 		close(ch)
@@ -18,7 +19,7 @@ func BFS(graph nodes.NodeAccess, root nodes.NodeID) NChannel {
 	return ch
 }
 
-func traverseBFS(graph nodes.NodeAccess, ch NChannel, stack *NodeStack, visited *NodeVisitedMap) {
+func traverseBFS(graph contract.NodeAccess, ch contract.NChannel, stack *collection.NodeStack, visited *collection.NodeVisitMap) {
 	for len(*stack) > 0 {
 		node := stack.PopFront()
 		nID := node.ID()

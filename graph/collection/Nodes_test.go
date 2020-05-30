@@ -1,17 +1,18 @@
-package nodes
+package collection
 
 import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/x1n13y84issmd42/dm/graph/contract"
 )
 
 type testNode struct {
 	Name string
 }
 
-func (node *testNode) ID() NodeID {
-	return NodeID(node.Name)
+func (node *testNode) ID() contract.NodeID {
+	return contract.NodeID(node.Name)
 }
 
 func tnode(name string) *testNode {

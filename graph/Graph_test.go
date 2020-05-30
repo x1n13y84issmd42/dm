@@ -4,11 +4,12 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/x1n13y84issmd42/dm/graph/nodes"
+	"github.com/x1n13y84issmd42/dm/graph/collection"
+	"github.com/x1n13y84issmd42/dm/graph/contract"
 	"github.com/x1n13y84issmd42/dm/graph/ut"
 )
 
-func CreateTestGraph(graph IGraph) {
+func CreateTestGraph(graph contract.Graph) {
 	root := ut.Node("R007")
 
 	graph.AddEdge(root, ut.Node("A"))
@@ -22,7 +23,7 @@ func Test_DAGraph(T *testing.T) {
 
 	CreateTestGraph(dg)
 
-	expected := nodes.NewNodes()
+	expected := collection.NewNodes()
 	expected.Add(dg.Node("A"))
 	expected.Add(dg.Node("B"))
 
@@ -36,7 +37,7 @@ func Test_UAGraph(T *testing.T) {
 
 	CreateTestGraph(dg)
 
-	expected := nodes.NewNodes()
+	expected := collection.NewNodes()
 	expected.Add(dg.Node("A"))
 	expected.Add(dg.Node("B"))
 	expected.Add(dg.Node("C"))

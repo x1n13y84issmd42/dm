@@ -1,6 +1,6 @@
 package ut
 
-import "github.com/x1n13y84issmd42/dm/graph/nodes"
+import "github.com/x1n13y84issmd42/dm/graph/contract"
 
 // TestNode ...
 type TestNode struct {
@@ -8,8 +8,8 @@ type TestNode struct {
 }
 
 // ID ...
-func (node *TestNode) ID() nodes.NodeID {
-	return nodes.NodeID(node.Name)
+func (node *TestNode) ID() contract.NodeID {
+	return contract.NodeID(node.Name)
 }
 
 // Node ...

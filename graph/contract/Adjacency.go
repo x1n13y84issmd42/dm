@@ -1,10 +1,10 @@
-package nodes
+package contract
 
 // NodeAccess is an interface to node access within graph.
 type NodeAccess interface {
 	Node(nID NodeID) Node
-	AdjacentNodes(nID NodeID) *Nodes
-	OutEdges(nID NodeID) []IEdge
+	AdjacentNodes(nID NodeID) Nodes
+	OutEdges(nID NodeID) []Edge
 }
 
 // IAdjacency is an interface to access node's adjacency info.

@@ -1,10 +1,10 @@
-package iterator
+package collection
 
 import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/x1n13y84issmd42/dm/graph/nodes"
+	"github.com/x1n13y84issmd42/dm/graph/contract"
 	"github.com/x1n13y84issmd42/dm/graph/ut"
 )
 
@@ -20,7 +20,7 @@ func Test_NodeStack(T *testing.T) {
 	})
 
 	T.Run("Append", func(T *testing.T) {
-		stack.Append([]nodes.Node{
+		stack.Append([]contract.Node{
 			ut.Node("1"),
 			ut.Node("2"),
 			ut.Node("3"),

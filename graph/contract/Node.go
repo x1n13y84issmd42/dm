@@ -1,4 +1,4 @@
-package nodes
+package contract
 
 //NodeID is a value, unique within a graph, which determines a node's identity.
 type NodeID string
