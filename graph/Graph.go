@@ -61,8 +61,8 @@ func (graph *DGraph) AdjacentNodes(nID contract.NodeID) contract.Nodes {
 }
 
 // DFS returns a DFS node iterator.
-func (graph *DGraph) DFS(nID contract.NodeID) contract.NChannel {
-	return iterator.DFS(graph, nID)
+func (graph *DGraph) DFS(nID contract.NodeID, traverse contract.Traversal) contract.NChannel {
+	return iterator.DFS(graph, nID, traverse)
 }
 
 // BFS returns a BFS node iterator.
@@ -92,8 +92,8 @@ func (graph *UGraph) AdjacentNodes(nID contract.NodeID) contract.Nodes {
 }
 
 // DFS returns a DFS node iterator.
-func (graph *UGraph) DFS(nID contract.NodeID) contract.NChannel {
-	return iterator.DFS(graph, nID)
+func (graph *UGraph) DFS(nID contract.NodeID, traverse contract.Traversal) contract.NChannel {
+	return iterator.DFS(graph, nID, traverse)
 }
 
 // BFS returns a BFS node iterator.

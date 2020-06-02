@@ -32,7 +32,7 @@ func Test_DFS_1(T *testing.T) {
 	expected := "L0L10L20L30L11L21L12"
 	actual := ""
 
-	for node := range g.DFS("L0") {
+	for node := range g.DFS("L0", iterator.PreOrder) {
 		actual = fmt.Sprintf("%s%s", actual, node.(*ut.TestNode).Name)
 	}
 
@@ -50,7 +50,7 @@ func Test_DFS_Loop(T *testing.T) {
 	expected := "L0L10"
 	actual := ""
 
-	for node := range iterator.DFS(g, "L0") {
+	for node := range g.DFS("L0", iterator.PreOrder) {
 		actual = fmt.Sprintf("%s%s", actual, node.(*ut.TestNode).Name)
 	}
 

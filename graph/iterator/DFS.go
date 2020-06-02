@@ -6,11 +6,11 @@ import (
 )
 
 // DFS creates a depth-first search iterator to traverse the graph.
-func DFS(graph contract.NodeAccess, root contract.NodeID) contract.NChannel {
+func DFS(graph contract.NodeAccess, root contract.NodeID, traverse contract.Traversal) contract.NChannel {
 	ch := make(contract.NChannel)
 	go func() {
 		visited := collection.NodeVisitMap{}
-		traverseDFS(graph, graph.Node(root), ch, &visited, PreOrder)
+		traverseDFS(graph, graph.Node(root), ch, &visited, traverse)
 		close(ch)
 	}()
 	return ch
