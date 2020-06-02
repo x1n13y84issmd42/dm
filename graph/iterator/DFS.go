@@ -10,31 +10,26 @@ func DFS(graph contract.NodeAccess, root contract.NodeID) contract.NChannel {
 	ch := make(contract.NChannel)
 	go func() {
 		visited := collection.NodeVisitMap{}
-		traverseDFS(graph, graph.Node(root), ch, &visited, false)
+		traverseDFS(graph, graph.Node(root), ch, &visited, PreOrder)
 		close(ch)
 	}()
 	return ch
 }
 
-func traverseDFS(graph contract.NodeAccess, node contract.Node, ch contract.NChannel, visited *collection.NodeVisitMap, postorder bool) {
+func traverseDFS(graph contract.NodeAccess, node contract.Node, ch contract.NChannel, visited *collection.NodeVisitMap, traverse contract.Traversal) {
 	nID := node.ID()
 	if (*visited)[nID] {
 		return
 	}
 
-	if !postorder {
+	traverse(func() {
 		ch <- node
 		(*visited)[nID] = true
-	}
-
-	for n := range graph.AdjacentNodes(nID).Range() {
-		traverseDFS(graph, n, ch, visited, postorder)
-	}
-
-	if postorder {
-		ch <- node
-		(*visited)[nID] = true
-	}
+	}, func() {
+		for n := range graph.AdjacentNodes(nID).Range() {
+			traverseDFS(graph, n, ch, visited, traverse)
+		}
+	})
 }
 
 /* // EDFS creates a depth-first search iterator to traverse edges.

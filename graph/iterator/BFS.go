@@ -19,7 +19,12 @@ func BFS(graph contract.NodeAccess, root contract.NodeID) contract.NChannel {
 	return ch
 }
 
-func traverseBFS(graph contract.NodeAccess, ch contract.NChannel, stack *collection.NodeStack, visited *collection.NodeVisitMap) {
+func traverseBFS(
+	graph contract.NodeAccess,
+	ch contract.NChannel,
+	stack *collection.NodeStack,
+	visited *collection.NodeVisitMap,
+) {
 	for len(*stack) > 0 {
 		node := stack.PopFront()
 		nID := node.ID()

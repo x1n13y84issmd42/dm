@@ -32,7 +32,7 @@ func Test_BFS_1(T *testing.T) {
 	expected := "L0L10L11L12L20L21L30"
 	actual := ""
 
-	for node := range iterator.BFS(g, "L0") {
+	for node := range g.BFS("L0") {
 		actual = fmt.Sprintf("%s%s", actual, node.(*ut.TestNode).Name)
 	}
 
