@@ -60,19 +60,3 @@ func (list *AdjacencyList) Node(nID contract.NodeID) contract.Node {
 
 	return nil
 }
-
-// OutEdges returns a list of outbound edges for a node defined by nID.
-func (list *AdjacencyList) OutEdges(nID contract.NodeID) []contract.Edge {
-	res := []contract.Edge{}
-	// if list.Nodes.Has(nID) {
-	// 	n := list.Nodes.Get(nID)
-	// 	for na := range n.Adjacent().Range() {
-	// 		res = append(res, contract.Edge{
-	// 			A: n,
-	// 			B: na,
-	// 		})
-	// 	}
-	// }
-
-	return res
-}
