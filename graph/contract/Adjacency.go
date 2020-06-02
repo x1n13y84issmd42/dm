@@ -4,6 +4,7 @@ package contract
 type NodeAccess interface {
 	Node(nID NodeID) Node
 	AdjacentNodes(nID NodeID) Nodes
+	UpstreamNodes(nID NodeID) Nodes
 }
 
 // IAdjacency is an interface to access node's adjacency info.

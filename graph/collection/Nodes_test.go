@@ -24,77 +24,77 @@ func tnode(name string) *testNode {
 	return &node
 }
 
-func Test_Set_Add_Get_Remove(T *testing.T) {
-	set := collection.NewNodes()
-	assert.Equal(T, 0, set.Count())
-
-	ares := set.Add(tnode("a"))
-	assert.Equal(T, 1, set.Count())
-	assert.False(T, ares)
-
-	ares = set.Add(tnode("a"))
-	assert.True(T, ares)
-	set.Add(tnode("b"))
-	assert.Equal(T, 2, set.Count())
-
-	assert.Equal(T, tnode("a"), set.Get("a"))
-
-	ares = set.Remove("a")
-	assert.True(T, ares)
-	assert.Equal(T, 1, set.Count())
-
-	ares = set.Remove("a")
-	assert.False(T, ares)
-	assert.Equal(T, 1, set.Count())
-}
-
-func Test_Set_Values(T *testing.T) {
+func Test_Set(T *testing.T) {
 	set := collection.NewNodes()
 
-	set.Add(tnode("a"))
-	set.Add(tnode("z"))
-	set.Add(tnode("c"))
-	set.Add(tnode("b"))
-	set.Add(tnode("e"))
-	set.Add(tnode("a"))
-	set.Add(tnode("z"))
-	set.Add(tnode("z"))
+	T.Run("Empty", func(T *testing.T) {
+		assert.Equal(T, 0, set.Count())
+	})
 
-	expected := []*testNode{
-		tnode("a"),
-		tnode("b"),
-		tnode("c"),
-		tnode("e"),
-		tnode("z"),
-	}
+	T.Run("Add", func(T *testing.T) {
+		ares := set.Add(tnode("a"))
+		assert.Equal(T, 1, set.Count())
+		assert.False(T, ares)
 
-	actual := []*testNode{}
+		ares = set.Add(tnode("a"))
+		assert.True(T, ares)
+		set.Add(tnode("b"))
+		assert.Equal(T, 2, set.Count())
+	})
 
-	for _, n := range set.Values() {
-		actual = append(actual, n.(*testNode))
-	}
+	T.Run("Get", func(T *testing.T) {
+		assert.Equal(T, tnode("a"), set.Get("a"))
+	})
 
-	assert.Equal(T, expected, actual)
-}
+	T.Run("Remove", func(T *testing.T) {
+		ares := set.Remove("a")
+		assert.True(T, ares)
+		assert.Equal(T, 1, set.Count())
+		ares = set.Remove("a")
+		assert.False(T, ares)
+		assert.Equal(T, 1, set.Count())
+	})
 
-func Test_Set_Clone(T *testing.T) {
-	set := collection.NewNodes()
+	T.Run("Values", func(T *testing.T) {
+		set := collection.NewNodes(tnode("a"), tnode("z"), tnode("c"))
 
-	set.Add(tnode("a"))
-	set.Add(tnode("z"))
-	set.Add(tnode("c"))
-	set.Add(tnode("b"))
-	set.Add(tnode("e"))
-	set.Add(tnode("a"))
-	set.Add(tnode("z"))
-	set.Add(tnode("z"))
+		set.Add(tnode("b"))
+		set.Add(tnode("e"))
+		set.Add(tnode("a"))
+		set.Add(tnode("z"))
+		set.Add(tnode("z"))
 
-	expected := collection.NewNodes()
-	expected.Add(tnode("a"))
-	expected.Add(tnode("b"))
-	expected.Add(tnode("c"))
-	expected.Add(tnode("e"))
-	expected.Add(tnode("z"))
+		expected := []*testNode{
+			tnode("a"),
+			tnode("b"),
+			tnode("c"),
+			tnode("e"),
+			tnode("z"),
+		}
 
-	assert.Equal(T, expected, set.Clone())
+		actual := []*testNode{}
+
+		for _, n := range set.Values() {
+			actual = append(actual, n.(*testNode))
+		}
+
+		assert.Equal(T, expected, actual)
+	})
+
+	T.Run("Clone", func(T *testing.T) {
+		set := collection.NewNodes(
+			tnode("a"), tnode("z"),
+			tnode("c"), tnode("b"),
+			tnode("e"), tnode("a"),
+			tnode("z"), tnode("c"))
+
+		expected := collection.NewNodes(
+			tnode("a"),
+			tnode("b"),
+			tnode("e"), tnode("c"),
+			tnode("z"),
+		)
+
+		assert.Equal(T, expected, set.Clone())
+	})
 }

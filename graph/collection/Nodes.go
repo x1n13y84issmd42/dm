@@ -73,7 +73,7 @@ func (set Nodes) Values() []contract.Node {
 }
 
 // Range iterates over elements in lexicographic key order.
-func (set Nodes) Range() contract.Channel {
+func (set Nodes) Range() contract.NChannel {
 	ch := make(chan contract.Node)
 	go func() {
 		// Collecting keys.

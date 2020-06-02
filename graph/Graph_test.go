@@ -22,21 +22,131 @@ func CreateTestGraph(graph contract.Graph) {
 
 func Test_DGraph(T *testing.T) {
 	g := graph.NewDGraph()
-
 	CreateTestGraph(g)
 
-	expected := collection.NewNodes()
-	expected.Add(g.Node("A"))
-	expected.Add(g.Node("B"))
+	T.Run("AdjacentNodes", func(T *testing.T) {
+		assert.Equal(T,
+			collection.NewNodes(g.Node("A"), g.Node("B")),
+			g.AdjacentNodes("R007"),
+		)
+	})
 
-	actual := g.AdjacentNodes("R007")
+	T.Run("UpstreamNodes", func(T *testing.T) {
+		assert.Equal(T,
+			collection.NewNodes(g.Node("C"), g.Node("D")),
+			g.UpstreamNodes("R007"),
+		)
+	})
 
-	assert.Equal(T, expected, actual)
+	T.Run("OutEdges", func(T *testing.T) {
+		expected := []graph.DEdge{
+			{
+				A: g.Node("R007"),
+				B: g.Node("A"),
+			},
+			{
+				A: g.Node("R007"),
+				B: g.Node("B"),
+			},
+		}
+
+		assert.Equal(T,
+			expected,
+			g.OutEdges("R007"),
+		)
+	})
+
+	T.Run("InEdges", func(T *testing.T) {
+		expected := []graph.DEdge{
+			{
+				A: g.Node("C"),
+				B: g.Node("R007"),
+			},
+			{
+				A: g.Node("D"),
+				B: g.Node("R007"),
+			},
+		}
+
+		assert.Equal(T,
+			expected,
+			g.InEdges("R007"),
+		)
+	})
+}
+
+func Test_UGraph(T *testing.T) {
+	g := graph.NewUGraph()
+	CreateTestGraph(g)
+
+	T.Run("AdjacentNodes", func(T *testing.T) {
+		expected := collection.NewNodes(g.Node("A"), g.Node("B"), g.Node("C"), g.Node("D"))
+		actual := g.AdjacentNodes("R007")
+		assert.Equal(T, expected, actual)
+	})
+
+	T.Run("UpstreamNodes", func(T *testing.T) {
+		expected := collection.NewNodes(g.Node("A"), g.Node("B"), g.Node("C"), g.Node("D"))
+		actual := g.UpstreamNodes("R007")
+		assert.Equal(T, expected, actual)
+	})
+
+	T.Run("OutEdges", func(T *testing.T) {
+		expected := []graph.UEdge{
+			{
+				A: g.Node("R007"),
+				B: g.Node("A"),
+			},
+			{
+				A: g.Node("R007"),
+				B: g.Node("B"),
+			},
+			{
+				A: g.Node("R007"),
+				B: g.Node("C"),
+			},
+			{
+				A: g.Node("R007"),
+				B: g.Node("D"),
+			},
+		}
+
+		assert.Equal(T,
+			expected,
+			g.OutEdges("R007"),
+		)
+	})
+
+	T.Run("InEdges", func(T *testing.T) {
+		expected := []graph.UEdge{
+			{
+				A: g.Node("A"),
+				B: g.Node("R007"),
+			},
+			{
+				A: g.Node("B"),
+				B: g.Node("R007"),
+			},
+			{
+				A: g.Node("C"),
+				B: g.Node("R007"),
+			},
+			{
+				A: g.Node("D"),
+				B: g.Node("R007"),
+			},
+		}
+
+		assert.Equal(T,
+			expected,
+			g.InEdges("R007"),
+		)
+	})
 }
 
 // Iterators are tested in the iterator package.
 // This exists just to have coverage on graphs' methods.
-func Test_Cover_DGraph_Iterators(T *testing.T) {
+func Test_Cover_Iterators(T *testing.T) {
 	dg := graph.NewDGraph(ut.Node("A"), ut.Node("B"))
 	dg.DFS("A", iterator.PreOrder)
 	dg.BFS("A")
@@ -46,46 +156,34 @@ func Test_Cover_DGraph_Iterators(T *testing.T) {
 	ug.BFS("A")
 }
 
-func Test_DEdge_Reverse(T *testing.T) {
-	e := graph.DEdge{
-		A: ut.Node("A"),
-		B: ut.Node("B"),
-	}
+func Test_DEdge(T *testing.T) {
+	T.Run("Reverse", func(T *testing.T) {
+		e := graph.DEdge{
+			A: ut.Node("A"),
+			B: ut.Node("B"),
+		}
 
-	expected := graph.DEdge{
-		A: e.B,
-		B: e.A,
-	}
+		expected := graph.DEdge{
+			A: e.B,
+			B: e.A,
+		}
 
-	assert.Equal(T, expected, e.Reverse())
+		assert.Equal(T, expected, e.Reverse())
+	})
 }
 
-func Test_UEdge_Reverse(T *testing.T) {
-	e := graph.UEdge{
-		A: ut.Node("A"),
-		B: ut.Node("B"),
-	}
+func Test_UEdge(T *testing.T) {
+	T.Run("Reverse", func(T *testing.T) {
+		e := graph.UEdge{
+			A: ut.Node("A"),
+			B: ut.Node("B"),
+		}
 
-	expected := graph.UEdge{
-		A: e.A,
-		B: e.B,
-	}
+		expected := graph.UEdge{
+			A: e.A,
+			B: e.B,
+		}
 
-	assert.Equal(T, expected, e.Reverse())
-}
-
-func Test_UGraph(T *testing.T) {
-	g := graph.NewUGraph()
-
-	CreateTestGraph(g)
-
-	expected := collection.NewNodes()
-	expected.Add(g.Node("A"))
-	expected.Add(g.Node("B"))
-	expected.Add(g.Node("C"))
-	expected.Add(g.Node("D"))
-
-	actual := g.AdjacentNodes("R007")
-
-	assert.Equal(T, expected, actual)
+		assert.Equal(T, expected, e.Reverse())
+	})
 }

@@ -44,6 +44,26 @@ func (graph *UGraph) Node(nID contract.NodeID) contract.Node {
 	return graph.A.Node(nID)
 }
 
+// AdjacentNodes returns a list of adjacent nodes for a node defined by nID.
+func (graph *UGraph) AdjacentNodes(nID contract.NodeID) contract.Nodes {
+	return graph.A.AdjacentNodes(nID)
+}
+
+// UpstreamNodes returns a list of adjacent nodes for a node defined by nID.
+func (graph *UGraph) UpstreamNodes(nID contract.NodeID) contract.Nodes {
+	return graph.A.UpstreamNodes(nID)
+}
+
+// DFS returns a DFS node iterator.
+func (graph *UGraph) DFS(nID contract.NodeID, traverse contract.Traversal) contract.NChannel {
+	return iterator.DFS(graph, nID, traverse)
+}
+
+// BFS returns a BFS node iterator.
+func (graph *UGraph) BFS(nID contract.NodeID) contract.NChannel {
+	return iterator.BFS(graph, nID)
+}
+
 // OutEdges returns a list of outbound edges for a node defined by nID.
 func (graph *UGraph) OutEdges(nID contract.NodeID) []UEdge {
 	res := []UEdge{}
@@ -60,17 +80,18 @@ func (graph *UGraph) OutEdges(nID contract.NodeID) []UEdge {
 	return res
 }
 
-// AdjacentNodes returns a list of adjacent nodes for a node defined by nID.
-func (graph *UGraph) AdjacentNodes(nID contract.NodeID) contract.Nodes {
-	return graph.A.AdjacentNodes(nID)
-}
+// InEdges returns a list of inbound edges for a node defined by nID.
+func (graph *UGraph) InEdges(nID contract.NodeID) []UEdge {
+	res := []UEdge{}
+	n := graph.Node(nID)
+	if n != nil {
+		for na := range graph.UpstreamNodes(nID).Range() {
+			res = append(res, UEdge{
+				A: na,
+				B: n,
+			})
+		}
+	}
 
-// DFS returns a DFS node iterator.
-func (graph *UGraph) DFS(nID contract.NodeID, traverse contract.Traversal) contract.NChannel {
-	return iterator.DFS(graph, nID, traverse)
-}
-
-// BFS returns a BFS node iterator.
-func (graph *UGraph) BFS(nID contract.NodeID) contract.NChannel {
-	return iterator.BFS(graph, nID)
+	return res
 }
