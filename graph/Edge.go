@@ -17,8 +17,8 @@ type WEdge struct {
 // Reverse creates a new edge by swapping the receiver's nodes.
 func (e DEdge) Reverse() contract.Edge {
 	return DEdge{
-		A: e.A,
-		B: e.B,
+		A: e.B,
+		B: e.A,
 	}
 }
 
@@ -26,8 +26,8 @@ func (e DEdge) Reverse() contract.Edge {
 func (e WEdge) Reverse() contract.Edge {
 	return WEdge{
 		DEdge: DEdge{
-			A: e.A,
-			B: e.B,
+			A: e.B,
+			B: e.A,
 		},
 		W: e.W,
 	}
