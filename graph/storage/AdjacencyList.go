@@ -43,6 +43,15 @@ func (list *AdjacencyList) AddEdge(v1 contract.Node, v2 contract.Node) {
 	list.List[v1ID].Add(v2)
 }
 
+// Node returns a node instance by it's ID.
+func (list *AdjacencyList) Node(nID contract.NodeID) contract.Node {
+	if list.Nodes.Has(nID) {
+		return list.Nodes.Get(nID)
+	}
+
+	return nil
+}
+
 // AdjacentNodes returns a set of nodes adjacent to n.
 func (list *AdjacencyList) AdjacentNodes(nID contract.NodeID) contract.Nodes {
 	if list.List[nID] != nil {
@@ -52,11 +61,18 @@ func (list *AdjacencyList) AdjacentNodes(nID contract.NodeID) contract.Nodes {
 	return collection.NewNodes()
 }
 
-// Node returns a node instance by it's ID.
-func (list *AdjacencyList) Node(nID contract.NodeID) contract.Node {
-	if list.Nodes.Has(nID) {
-		return list.Nodes.Get(nID)
+// UpstreamNodes returns a set of nodes adjacent to n.
+func (list *AdjacencyList) UpstreamNodes(nID contract.NodeID) contract.Nodes {
+	res := collection.NewNodes()
+
+	for upID, adjacent := range list.List {
+		for nA := range adjacent.Range() {
+			if nA.ID() == nID {
+				res.Add(list.Nodes.Get(upID))
+				break
+			}
+		}
 	}
 
-	return nil
+	return res
 }

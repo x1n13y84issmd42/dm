@@ -12,10 +12,16 @@ type Nodes struct {
 }
 
 // NewNodes creates a new node set instance.
-func NewNodes() *Nodes {
-	return &Nodes{
+func NewNodes(nodes ...contract.Node) *Nodes {
+	res := &Nodes{
 		Map: make(map[contract.NodeID]contract.Node),
 	}
+
+	for _, n := range nodes {
+		res.Add(n)
+	}
+
+	return res
 }
 
 // Add adds a node to the set and returns true if it had been inserted for the first time.
