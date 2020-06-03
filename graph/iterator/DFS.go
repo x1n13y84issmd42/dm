@@ -37,13 +37,13 @@ func traverseDFS(
 	nextNodes contract.TraversalDirection,
 ) {
 	nID := node.ID()
-	if (*visited)[nID] {
+	if visited.Visited(nID) {
 		return
 	}
 
 	traverse(func() {
 		ch <- node
-		(*visited)[nID] = true
+		visited.Visit(nID)
 	}, func() {
 		for n := range nextNodes(graph, nID).Range() {
 			traverseDFS(graph, n, ch, visited, traverse, nextNodes)

@@ -44,9 +44,9 @@ func traverseBFS(
 		node := stack.PopFront()
 		nID := node.ID()
 
-		if node != nil && (*visited)[nID] == false {
+		if node != nil && !visited.Visited(nID) {
 			ch <- node
-			(*visited)[nID] = true
+			visited.Visit(nID)
 
 			next := nextNodes(graph, nID)
 			if next.Count() > 0 {

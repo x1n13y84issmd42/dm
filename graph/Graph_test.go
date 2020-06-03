@@ -150,10 +150,14 @@ func Test_Cover_Iterators(T *testing.T) {
 	dg := graph.NewDGraph(ut.Node("A"), ut.Node("B"))
 	dg.DFS("A", iterator.PreOrder)
 	dg.BFS("A")
+	dg.RDFS("A", iterator.PreOrder)
+	dg.RBFS("A")
 
 	ug := graph.NewUGraph(ut.Node("A"), ut.Node("B"))
 	ug.DFS("A", iterator.PreOrder)
 	ug.BFS("A")
+	ug.RDFS("A", iterator.PreOrder)
+	ug.RBFS("A")
 }
 
 func Test_DEdge(T *testing.T) {
