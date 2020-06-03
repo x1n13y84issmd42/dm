@@ -1,0 +1,23 @@
+language: go
+go:
+  - "1.14.x"
+
+env:
+  global:
+    - CC_TEST_REPORTER_ID=e8bf411f21a517cac42737b0826d3123b9fa49b639d2e2f4a3f44f38cafac404
+
+before_install:
+  - go get github.com/rakyll/gotest
+  - go get github.com/stretchr/testify/assert
+
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
+script:
+  - gotest -v -coverprofile c.out ./...
+  - go build ./graph ./stats
+
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
