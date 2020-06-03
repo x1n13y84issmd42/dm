@@ -56,3 +56,26 @@ func Test_BFS_Loop(T *testing.T) {
 
 	assert.Equal(T, expected, actual)
 }
+
+func Test_RBFS(T *testing.T) {
+	L0 := ut.Node("L0")
+	L_10 := ut.Node("L-10")
+	g := graph.NewDGraph(
+		ut.Node("L-21"), L_10,
+		ut.Node("L-20"), L_10,
+		L_10, L0,
+		ut.Node("L-11"), L0,
+		ut.Node("L-12"), L0,
+		L0, ut.Node("L10"),
+		L0, ut.Node("L11"),
+	)
+
+	expected := "L0L-10L-11L-12L-20L-21"
+	actual := ""
+
+	for node := range g.RBFS("L0") {
+		actual = fmt.Sprintf("%s%s", actual, node.(*ut.TestNode).Name)
+	}
+
+	assert.Equal(T, expected, actual)
+}

@@ -6,17 +6,36 @@ import (
 )
 
 // DFS creates a depth-first search iterator to traverse the graph.
-func DFS(graph contract.NodeAccess, root contract.NodeID, traverse contract.Traversal) contract.NChannel {
+func DFS(graph contract.NodeAccess, root contract.NodeID, traverse contract.TraversalOrder) contract.NChannel {
 	ch := make(contract.NChannel)
 	go func() {
 		visited := collection.NodeVisitMap{}
-		traverseDFS(graph, graph.Node(root), ch, &visited, traverse)
+		traverseDFS(graph, graph.Node(root), ch, &visited, traverse, Forward)
 		close(ch)
 	}()
 	return ch
 }
 
-func traverseDFS(graph contract.NodeAccess, node contract.Node, ch contract.NChannel, visited *collection.NodeVisitMap, traverse contract.Traversal) {
+// RDFS creates a reversed depth-first search iterator to traverse the graph.
+// Reversed search from a node N means walking inbpund edges from parent nodes of N depth-first.
+func RDFS(graph contract.NodeAccess, root contract.NodeID, traverse contract.TraversalOrder) contract.NChannel {
+	ch := make(contract.NChannel)
+	go func() {
+		visited := collection.NodeVisitMap{}
+		traverseDFS(graph, graph.Node(root), ch, &visited, traverse, Backward)
+		close(ch)
+	}()
+	return ch
+}
+
+func traverseDFS(
+	graph contract.NodeAccess,
+	node contract.Node,
+	ch contract.NChannel,
+	visited *collection.NodeVisitMap,
+	traverse contract.TraversalOrder,
+	nextNodes contract.TraversalDirection,
+) {
 	nID := node.ID()
 	if (*visited)[nID] {
 		return
@@ -26,8 +45,8 @@ func traverseDFS(graph contract.NodeAccess, node contract.Node, ch contract.NCha
 		ch <- node
 		(*visited)[nID] = true
 	}, func() {
-		for n := range graph.AdjacentNodes(nID).Range() {
-			traverseDFS(graph, n, ch, visited, traverse)
+		for n := range nextNodes(graph, nID).Range() {
+			traverseDFS(graph, n, ch, visited, traverse, nextNodes)
 		}
 	})
 }

@@ -55,13 +55,23 @@ func (graph *UGraph) UpstreamNodes(nID contract.NodeID) contract.Nodes {
 }
 
 // DFS returns a DFS node iterator.
-func (graph *UGraph) DFS(nID contract.NodeID, traverse contract.Traversal) contract.NChannel {
+func (graph *UGraph) DFS(nID contract.NodeID, traverse contract.TraversalOrder) contract.NChannel {
 	return iterator.DFS(graph, nID, traverse)
 }
 
 // BFS returns a BFS node iterator.
 func (graph *UGraph) BFS(nID contract.NodeID) contract.NChannel {
 	return iterator.BFS(graph, nID)
+}
+
+// RDFS returns a reversed DFS node iterator.
+func (graph *UGraph) RDFS(nID contract.NodeID, traverse contract.TraversalOrder) contract.NChannel {
+	return iterator.RDFS(graph, nID, traverse)
+}
+
+// RBFS returns a RBFS node iterator.
+func (graph *UGraph) RBFS(nID contract.NodeID) contract.NChannel {
+	return iterator.RBFS(graph, nID)
 }
 
 // OutEdges returns a list of outbound edges for a node defined by nID.

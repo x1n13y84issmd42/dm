@@ -3,8 +3,10 @@ package contract
 // Graph is an interface for unweighted graphs.
 type Graph interface {
 	NodeAccess
-	DFS(n NodeID, traverse Traversal) NChannel
+	DFS(n NodeID, traverse TraversalOrder) NChannel
 	BFS(n NodeID) NChannel
+	RDFS(n NodeID, traverse TraversalOrder) NChannel
+	RBFS(n NodeID) NChannel
 
 	AddEdge(v1 Node, v2 Node)
 	// OutEdges(nID NodeID) []Edge
