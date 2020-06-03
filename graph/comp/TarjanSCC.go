@@ -1,4 +1,4 @@
-package graph
+package comp
 
 import "github.com/x1n13y84issmd42/dm/graph/contract"
 
