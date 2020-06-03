@@ -1,15 +1,16 @@
-package iterator
+package collection_test
 
 import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/x1n13y84issmd42/dm/graphs/nodes"
-	"github.com/x1n13y84issmd42/dm/graphs/ut"
+	"github.com/x1n13y84issmd42/dm/graph/collection"
+	"github.com/x1n13y84issmd42/dm/graph/contract"
+	"github.com/x1n13y84issmd42/dm/graph/ut"
 )
 
 func Test_NodeStack(T *testing.T) {
-	stack := NodeStack{}
+	stack := collection.NodeStack{}
 
 	T.Run("Push", func(T *testing.T) {
 		stack.Push(ut.Node("a"))
@@ -20,7 +21,7 @@ func Test_NodeStack(T *testing.T) {
 	})
 
 	T.Run("Append", func(T *testing.T) {
-		stack.Append([]nodes.INode{
+		stack.Append([]contract.Node{
 			ut.Node("1"),
 			ut.Node("2"),
 			ut.Node("3"),
@@ -35,5 +36,9 @@ func Test_NodeStack(T *testing.T) {
 
 		assert.Equal(T, n.(*ut.TestNode).Name, "a")
 		assert.Equal(T, 6, len(stack))
+	})
+
+	T.Run("Pop Empty", func(T *testing.T) {
+		assert.Nil(T, (&collection.NodeStack{}).PopFront())
 	})
 }
