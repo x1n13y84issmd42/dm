@@ -17,12 +17,11 @@ func KosarajuSCC(graph contract.Graph) []*collection.Nodes {
 
 	res := []*collection.Nodes{}
 
-	// Second pass over the stack, this time a backwards one, i.e. over inbound edges.
+	// Second pass over the stack. Each node gets reverse DFS'd, i.e. over inbound edges.
 	// I'm reusing the i2's Visited map.
 	// This is the reason Iterate() doesn't reset it, by the way.
 	i2 := iterator.DFS(iterator.Backward, iterator.PostOrder)
-	n := stack.Pop()
-	for ; n != nil; n = stack.Pop() {
+	for n := stack.Pop(); n != nil; n = stack.Pop() {
 		if !i2.Visited.Visited(n.ID()) {
 			scc := collection.NewNodes()
 			for scn := range i2.Iterate(graph, collection.NewNodes(n)) {
