@@ -15,6 +15,18 @@ func (stack *NodeStack) Append(nodes []contract.Node) {
 	*stack = append(*stack, nodes...)
 }
 
+// Pop removes the first node from the stack and returns it.
+func (stack *NodeStack) Pop() contract.Node {
+	s := *stack
+	if len(s) >= 1 {
+		res := s[len(s)-1]
+		*stack = s[:len(s)-1]
+		return res
+	}
+
+	return nil
+}
+
 // PopFront removes the first node from the stack and returns it.
 func (stack *NodeStack) PopFront() contract.Node {
 	s := *stack
