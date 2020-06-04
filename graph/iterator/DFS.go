@@ -16,6 +16,7 @@ type DFSIterator struct {
 // Iterate performs DFS starting from each of provided nodes.
 func (i *DFSIterator) Iterate(graph contract.NodeAccess, nodes *collection.Nodes) contract.NChannel {
 	go func() {
+		i.ch = make(contract.NChannel)
 		for n := range nodes.Range() {
 			i.walk(graph, n)
 		}
@@ -44,7 +45,6 @@ func (i *DFSIterator) walk(graph contract.NodeAccess, node contract.Node) {
 // DFS creates a depth-first search iterator to traverse the graph.
 func DFS(next contract.TraversalDirection, traverse contract.TraversalOrder) *DFSIterator {
 	return &DFSIterator{
-		ch:       make(contract.NChannel),
 		next:     next,
 		traverse: traverse,
 		Visited:  collection.NodeVisitMap{},

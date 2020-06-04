@@ -16,6 +16,7 @@ type BFSIterator struct {
 // Iterate performs BFS starting from each of provided nodes.
 func (i *BFSIterator) Iterate(graph contract.NodeAccess, nodes *collection.Nodes) contract.NChannel {
 	go func() {
+		i.ch = make(contract.NChannel)
 		for n := range nodes.Range() {
 			i.stack.Push(n)
 			i.walk(graph, n)
@@ -46,7 +47,6 @@ func (i *BFSIterator) walk(graph contract.NodeAccess, node contract.Node) {
 // BFS creates a breadth-first search iterator to traverse nodes.
 func BFS(next contract.TraversalDirection) *BFSIterator {
 	return &BFSIterator{
-		ch:      make(contract.NChannel),
 		next:    next,
 		Visited: collection.NodeVisitMap{},
 		stack:   collection.NodeStack{},
