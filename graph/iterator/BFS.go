@@ -5,53 +5,50 @@ import (
 	"github.com/x1n13y84issmd42/dm/graph/contract"
 )
 
-// BFS creates a breadth-first search iterator to traverse nodes.
-func BFS(graph contract.NodeAccess, root contract.NodeID) contract.NChannel {
-	ch := make(contract.NChannel)
-	stack := collection.NodeStack{}
-	go func() {
-		stack.Push(graph.Node(root))
-		visited := collection.NodeVisitMap{}
-		traverseBFS(graph, ch, &stack, &visited, Forward)
-
-		close(ch)
-	}()
-	return ch
+// BFSIterator implements depth-first search to traverse graphs.
+type BFSIterator struct {
+	ch      contract.NChannel
+	next    contract.TraversalDirection
+	stack   collection.NodeStack
+	Visited collection.NodeVisitMap
 }
 
-// RBFS creates a reversed breadth-first search iterator to traverse nodes.
-func RBFS(graph contract.NodeAccess, root contract.NodeID) contract.NChannel {
-	ch := make(contract.NChannel)
-	stack := collection.NodeStack{}
+// Iterate performs BFS starting from each of provided nodes.
+func (i *BFSIterator) Iterate(graph contract.NodeAccess, nodes *collection.Nodes) contract.NChannel {
 	go func() {
-		stack.Push(graph.Node(root))
-		visited := collection.NodeVisitMap{}
-		traverseBFS(graph, ch, &stack, &visited, Backward)
-
-		close(ch)
+		for n := range nodes.Range() {
+			i.stack.Push(n)
+			i.walk(graph, n)
+		}
+		close(i.ch)
 	}()
-	return ch
+
+	return i.ch
 }
 
-func traverseBFS(
-	graph contract.NodeAccess,
-	ch contract.NChannel,
-	stack *collection.NodeStack,
-	visited *collection.NodeVisitMap,
-	nextNodes contract.TraversalDirection,
-) {
-	for len(*stack) > 0 {
-		node := stack.PopFront()
+func (i *BFSIterator) walk(graph contract.NodeAccess, node contract.Node) {
+	for len(i.stack) > 0 {
+		node := i.stack.PopFront()
 		nID := node.ID()
 
-		if node != nil && !visited.Visited(nID) {
-			ch <- node
-			visited.Visit(nID)
+		if node != nil && !i.Visited.Visited(nID) {
+			i.ch <- node
+			i.Visited.Visit(nID)
 
-			next := nextNodes(graph, nID)
+			next := i.next(graph, nID)
 			if next.Count() > 0 {
-				stack.Append(next.Values())
+				i.stack.Append(next.Values())
 			}
 		}
+	}
+}
+
+// BFS creates a breadth-first search iterator to traverse nodes.
+func BFS(next contract.TraversalDirection) *BFSIterator {
+	return &BFSIterator{
+		ch:      make(contract.NChannel),
+		next:    next,
+		Visited: collection.NodeVisitMap{},
+		stack:   collection.NodeStack{},
 	}
 }

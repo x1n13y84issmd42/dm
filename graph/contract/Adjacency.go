@@ -2,6 +2,7 @@ package contract
 
 // NodeAccess is an interface to node access within graph.
 type NodeAccess interface {
+	Nodes() Nodes
 	Node(nID NodeID) Node
 	AdjacentNodes(nID NodeID) Nodes
 	UpstreamNodes(nID NodeID) Nodes

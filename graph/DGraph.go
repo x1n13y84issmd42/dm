@@ -1,6 +1,7 @@
 package graph
 
 import (
+	"github.com/x1n13y84issmd42/dm/graph/collection"
 	"github.com/x1n13y84issmd42/dm/graph/contract"
 	"github.com/x1n13y84issmd42/dm/graph/iterator"
 	"github.com/x1n13y84issmd42/dm/graph/storage"
@@ -49,6 +50,11 @@ func (graph *DGraph) Node(nID contract.NodeID) contract.Node {
 	return graph.A.Node(nID)
 }
 
+// Nodes returns a set of all graph's nodes.
+func (graph *DGraph) Nodes() contract.Nodes {
+	return graph.A.Nodes()
+}
+
 // AdjacentNodes returns a list of adjacent nodes for a node defined by nID.
 func (graph *DGraph) AdjacentNodes(nID contract.NodeID) contract.Nodes {
 	return graph.A.AdjacentNodes(nID)
@@ -61,22 +67,22 @@ func (graph *DGraph) UpstreamNodes(nID contract.NodeID) contract.Nodes {
 
 // DFS returns a DFS node iterator.
 func (graph *DGraph) DFS(nID contract.NodeID, traverse contract.TraversalOrder) contract.NChannel {
-	return iterator.DFS(graph, nID, traverse)
+	return iterator.DFS(iterator.Forward, traverse).Iterate(graph, collection.NewNodes(graph.Node(nID)))
 }
 
 // BFS returns a BFS node iterator.
 func (graph *DGraph) BFS(nID contract.NodeID) contract.NChannel {
-	return iterator.BFS(graph, nID)
+	return iterator.BFS(iterator.Forward).Iterate(graph, collection.NewNodes(graph.Node(nID)))
 }
 
 // RDFS returns a reversed DFS node iterator.
 func (graph *DGraph) RDFS(nID contract.NodeID, traverse contract.TraversalOrder) contract.NChannel {
-	return iterator.RDFS(graph, nID, traverse)
+	return iterator.DFS(iterator.Backward, traverse).Iterate(graph, collection.NewNodes(graph.Node(nID)))
 }
 
 // RBFS returns a RBFS node iterator.
 func (graph *DGraph) RBFS(nID contract.NodeID) contract.NChannel {
-	return iterator.RBFS(graph, nID)
+	return iterator.BFS(iterator.Backward).Iterate(graph, collection.NewNodes(graph.Node(nID)))
 }
 
 // OutEdges returns a list of outbound edges for a node defined by nID.

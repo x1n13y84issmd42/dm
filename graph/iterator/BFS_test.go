@@ -6,7 +6,6 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/x1n13y84issmd42/dm/graph"
-	"github.com/x1n13y84issmd42/dm/graph/iterator"
 	"github.com/x1n13y84issmd42/dm/graph/ut"
 )
 
@@ -50,7 +49,7 @@ func Test_BFS_Loop(T *testing.T) {
 	expected := "L0L10"
 	actual := ""
 
-	for node := range iterator.BFS(g, "L0") {
+	for node := range g.BFS("L0") {
 		actual = fmt.Sprintf("%s%s", actual, node.(*ut.TestNode).Name)
 	}
 

@@ -10,15 +10,15 @@ type adjList map[contract.NodeID]contract.Nodes
 
 // AdjacencyList is a list of nodes adjacent to other nodes.
 type AdjacencyList struct {
-	Nodes contract.Nodes
-	List  adjList
+	nodes contract.Nodes
+	list  adjList
 }
 
 // NewAdjacencyList creates a new AdjacencyList instance.
 func NewAdjacencyList() *AdjacencyList {
 	return &AdjacencyList{
-		Nodes: collection.NewNodes(),
-		List:  adjList{},
+		nodes: collection.NewNodes(),
+		list:  adjList{},
 	}
 }
 
@@ -27,35 +27,40 @@ func (list *AdjacencyList) AddEdge(v1 contract.Node, v2 contract.Node) {
 	v1ID := v1.ID()
 	v2ID := v2.ID()
 
-	if list.List[v1ID] == nil {
-		list.List[v1ID] = collection.NewNodes()
+	if list.list[v1ID] == nil {
+		list.list[v1ID] = collection.NewNodes()
 	}
 
-	for n := range list.List[v1ID].Range() {
+	for n := range list.list[v1ID].Range() {
 		if n.ID() == v2ID {
 			return
 		}
 	}
 
-	list.Nodes.Add(v1)
-	list.Nodes.Add(v2)
+	list.nodes.Add(v1)
+	list.nodes.Add(v2)
 
-	list.List[v1ID].Add(v2)
+	list.list[v1ID].Add(v2)
 }
 
 // Node returns a node instance by it's ID.
 func (list *AdjacencyList) Node(nID contract.NodeID) contract.Node {
-	if list.Nodes.Has(nID) {
-		return list.Nodes.Get(nID)
+	if list.nodes.Has(nID) {
+		return list.nodes.Get(nID)
 	}
 
 	return nil
 }
 
+// Nodes returns a set of all nodes.
+func (list *AdjacencyList) Nodes() contract.Nodes {
+	return list.nodes
+}
+
 // AdjacentNodes returns a set of nodes adjacent to n.
 func (list *AdjacencyList) AdjacentNodes(nID contract.NodeID) contract.Nodes {
-	if list.List[nID] != nil {
-		return list.List[nID]
+	if list.list[nID] != nil {
+		return list.list[nID]
 	}
 
 	return collection.NewNodes()
@@ -65,10 +70,10 @@ func (list *AdjacencyList) AdjacentNodes(nID contract.NodeID) contract.Nodes {
 func (list *AdjacencyList) UpstreamNodes(nID contract.NodeID) contract.Nodes {
 	res := collection.NewNodes()
 
-	for upID, adjacent := range list.List {
+	for upID, adjacent := range list.list {
 		for nA := range adjacent.Range() {
 			if nA.ID() == nID {
-				res.Add(list.Nodes.Get(upID))
+				res.Add(list.nodes.Get(upID))
 				break
 			}
 		}

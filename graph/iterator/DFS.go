@@ -5,72 +5,48 @@ import (
 	"github.com/x1n13y84issmd42/dm/graph/contract"
 )
 
-// DFS creates a depth-first search iterator to traverse the graph.
-func DFS(graph contract.NodeAccess, root contract.NodeID, traverse contract.TraversalOrder) contract.NChannel {
-	ch := make(contract.NChannel)
-	go func() {
-		visited := collection.NodeVisitMap{}
-		traverseDFS(graph, graph.Node(root), ch, &visited, traverse, Forward)
-		close(ch)
-	}()
-	return ch
+// DFSIterator implements depth-first search to traverse graphs.
+type DFSIterator struct {
+	ch       contract.NChannel
+	traverse contract.TraversalOrder
+	next     contract.TraversalDirection
+	Visited  collection.NodeVisitMap
 }
 
-// RDFS creates a reversed depth-first search iterator to traverse the graph.
-// Reversed search from a node N means walking inbpund edges from parent nodes of N depth-first.
-func RDFS(graph contract.NodeAccess, root contract.NodeID, traverse contract.TraversalOrder) contract.NChannel {
-	ch := make(contract.NChannel)
+// Iterate performs DFS starting from each of provided nodes.
+func (i *DFSIterator) Iterate(graph contract.NodeAccess, nodes *collection.Nodes) contract.NChannel {
 	go func() {
-		visited := collection.NodeVisitMap{}
-		traverseDFS(graph, graph.Node(root), ch, &visited, traverse, Backward)
-		close(ch)
+		for n := range nodes.Range() {
+			i.walk(graph, n)
+		}
+		close(i.ch)
 	}()
-	return ch
+
+	return i.ch
 }
 
-func traverseDFS(
-	graph contract.NodeAccess,
-	node contract.Node,
-	ch contract.NChannel,
-	visited *collection.NodeVisitMap,
-	traverse contract.TraversalOrder,
-	nextNodes contract.TraversalDirection,
-) {
+func (i *DFSIterator) walk(graph contract.NodeAccess, node contract.Node) {
 	nID := node.ID()
-	if visited.Visited(nID) {
+	if i.Visited.Visited(nID) {
 		return
 	}
 
-	traverse(func() {
-		ch <- node
-		visited.Visit(nID)
+	i.Visited.Visit(nID)
+	i.traverse(func() {
+		i.ch <- node
 	}, func() {
-		for n := range nextNodes(graph, nID).Range() {
-			traverseDFS(graph, n, ch, visited, traverse, nextNodes)
+		for n := range i.next(graph, nID).Range() {
+			i.walk(graph, n)
 		}
 	})
 }
 
-/* // EDFS creates a depth-first search iterator to traverse edges.
-func EDFS(root nodes.Node) EChannel {
-	ch := make(EChannel)
-	go func() {
-		visited := collection.NodeVisitMap{}
-		traverseEDFS(root, ch, &visited)
-		close(ch)
-	}()
-	return ch
+// DFS creates a depth-first search iterator to traverse the graph.
+func DFS(next contract.TraversalDirection, traverse contract.TraversalOrder) *DFSIterator {
+	return &DFSIterator{
+		ch:       make(contract.NChannel),
+		next:     next,
+		traverse: traverse,
+		Visited:  collection.NodeVisitMap{},
+	}
 }
-
-func traverseEDFS(node nodes.Node, ch EChannel, visited *collection.NodeVisitMap) {
-	if (*visited)[node] {
-		return
-	}
-
-	(*visited)[node] = true
-
-	for n := range node.Adjacent().Range() {
-		// ch <- Edge
-		traverseEDFS(n, ch, visited)
-	}
-} */
