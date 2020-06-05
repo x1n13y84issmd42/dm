@@ -4,11 +4,11 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/x1n13y84issmd42/dm/graph"
-	"github.com/x1n13y84issmd42/dm/graph/collection"
-	"github.com/x1n13y84issmd42/dm/graph/contract"
-	"github.com/x1n13y84issmd42/dm/graph/iterator"
-	"github.com/x1n13y84issmd42/dm/graph/ut"
+	"github.com/x1n13y84issmd42/gog/graph"
+	"github.com/x1n13y84issmd42/gog/graph/collection"
+	"github.com/x1n13y84issmd42/gog/graph/contract"
+	"github.com/x1n13y84issmd42/gog/graph/iterator"
+	"github.com/x1n13y84issmd42/gog/graph/ut"
 )
 
 func CreateTestGraph(graph contract.Graph) {

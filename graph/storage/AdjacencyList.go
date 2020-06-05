@@ -1,8 +1,8 @@
 package storage
 
 import (
-	"github.com/x1n13y84issmd42/dm/graph/collection"
-	"github.com/x1n13y84issmd42/dm/graph/contract"
+	"github.com/x1n13y84issmd42/gog/graph/collection"
+	"github.com/x1n13y84issmd42/gog/graph/contract"
 )
 
 // adjList is a mapping between node IDs and their instances.

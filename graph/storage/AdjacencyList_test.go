@@ -4,9 +4,9 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/x1n13y84issmd42/dm/graph/collection"
-	"github.com/x1n13y84issmd42/dm/graph/storage"
-	"github.com/x1n13y84issmd42/dm/graph/ut"
+	"github.com/x1n13y84issmd42/gog/graph/collection"
+	"github.com/x1n13y84issmd42/gog/graph/storage"
+	"github.com/x1n13y84issmd42/gog/graph/ut"
 )
 
 func Test_AdjacencyList(T *testing.T) {

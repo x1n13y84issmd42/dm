@@ -1,6 +1,6 @@
 package ut
 
-import "github.com/x1n13y84issmd42/dm/graph/contract"
+import "github.com/x1n13y84issmd42/gog/graph/contract"
 
 // TestNode ...
 type TestNode struct {

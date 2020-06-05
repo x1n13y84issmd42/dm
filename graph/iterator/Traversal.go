@@ -1,6 +1,6 @@
 package iterator
 
-import "github.com/x1n13y84issmd42/dm/graph/contract"
+import "github.com/x1n13y84issmd42/gog/graph/contract"
 
 // Forward is the default traversal direction for directed graphs,
 // i.e. it follows the edges' directions.

@@ -1,6 +1,6 @@
 package collection
 
-import "github.com/x1n13y84issmd42/dm/graph/contract"
+import "github.com/x1n13y84issmd42/gog/graph/contract"
 
 // NodeStack is a slice of nodes.
 type NodeStack []contract.Node

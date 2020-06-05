@@ -1,9 +1,9 @@
 package comp
 
 import (
-	"github.com/x1n13y84issmd42/dm/graph/collection"
-	"github.com/x1n13y84issmd42/dm/graph/contract"
-	"github.com/x1n13y84issmd42/dm/graph/iterator"
+	"github.com/x1n13y84issmd42/gog/graph/collection"
+	"github.com/x1n13y84issmd42/gog/graph/contract"
+	"github.com/x1n13y84issmd42/gog/graph/iterator"
 )
 
 // KosarajuSCC finds strongly connected components of a graph using the Sambasiva Rao Kosaraju's algorithm.
