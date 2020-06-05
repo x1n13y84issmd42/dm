@@ -4,7 +4,7 @@ go:
 
 env:
   global:
-    - CC_TEST_REPORTER_ID=e8bf411f21a517cac42737b0826d3123b9fa49b639d2e2f4a3f44f38cafac404
+    - CC_TEST_REPORTER_ID=ab820d8589d7911e494cf5de6524c80497e8df912bec0959320fc480c39225db
 
 before_install:
   - go get github.com/rakyll/gotest
