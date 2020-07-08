@@ -31,6 +31,19 @@ func Test_DGraph(T *testing.T) {
 		)
 	})
 
+	T.Run("Nodes", func(T *testing.T) {
+		assert.Equal(T,
+			collection.NewNodes(
+				g.Node("R007"),
+				g.Node("A"),
+				g.Node("B"),
+				g.Node("C"),
+				g.Node("D"),
+			),
+			g.Nodes(),
+		)
+	})
+
 	T.Run("UpstreamNodes", func(T *testing.T) {
 		assert.Equal(T,
 			collection.NewNodes(g.Node("C"), g.Node("D")),
@@ -83,6 +96,19 @@ func Test_UGraph(T *testing.T) {
 		expected := collection.NewNodes(g.Node("A"), g.Node("B"), g.Node("C"), g.Node("D"))
 		actual := g.AdjacentNodes("R007")
 		assert.Equal(T, expected, actual)
+	})
+
+	T.Run("Nodes", func(T *testing.T) {
+		assert.Equal(T,
+			collection.NewNodes(
+				g.Node("R007"),
+				g.Node("A"),
+				g.Node("B"),
+				g.Node("C"),
+				g.Node("D"),
+			),
+			g.Nodes(),
+		)
 	})
 
 	T.Run("UpstreamNodes", func(T *testing.T) {
