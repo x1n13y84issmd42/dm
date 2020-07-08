@@ -38,9 +38,7 @@ func Test_MotherNode(T *testing.T) {
 		g.AddEdge(ut.Node("1"), ut.Node("3"))
 		g.AddEdge(ut.Node("2"), g.Node("3"))
 
-		actual := comp.MotherNode(g)
-
-		assert.Nil(T, actual)
+		assert.Nil(T, comp.MotherNode(g))
 
 	})
 }
