@@ -38,7 +38,18 @@ func Test_NodeStack(T *testing.T) {
 		assert.Equal(T, 6, len(stack))
 	})
 
-	T.Run("Pop Empty", func(T *testing.T) {
+	T.Run("PopFront Empty", func(T *testing.T) {
 		assert.Nil(T, (&collection.NodeStack{}).PopFront())
+	})
+
+	T.Run("Pop", func(T *testing.T) {
+		n := stack.Pop()
+
+		assert.Equal(T, n.(*ut.TestNode).Name, "4")
+		assert.Equal(T, 5, len(stack))
+	})
+
+	T.Run("Pop Empty", func(T *testing.T) {
+		assert.Nil(T, (&collection.NodeStack{}).Pop())
 	})
 }
