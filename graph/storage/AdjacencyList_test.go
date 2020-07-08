@@ -23,6 +23,17 @@ func Test_AdjacencyList(T *testing.T) {
 		assert.Nil(T, al.Node("Root_INVALID"))
 	})
 
+	T.Run("Nodes", func(T *testing.T) {
+		expected := collection.NewNodes(
+			al.Node("R007"),
+			al.Node("Down 1"),
+			al.Node("Down 2"),
+			al.Node("Up 1"),
+			al.Node("Up 2"),
+		)
+		assert.Equal(T, expected, al.Nodes())
+	})
+
 	T.Run("AdjacentNodes", func(T *testing.T) {
 		assert.Equal(T,
 			collection.NewNodes(ut.Node("Down 1"), ut.Node("Down 2")),
