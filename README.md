@@ -1,4 +1,4 @@
-# dm
+# GOG
 Graphs in Go.
 
 [![Build Status](https://travis-ci.com/x1n13y84issmd42/gog.svg?branch=master)](https://travis-ci.com/x1n13y84issmd42/gog)
