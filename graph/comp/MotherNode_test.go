@@ -10,22 +10,37 @@ import (
 )
 
 func Test_MotherNode(T *testing.T) {
-	g := graph.NewDGraph()
+	T.Run("Exists", func(T *testing.T) {
+		g := graph.NewDGraph()
 
-	g.AddEdge(ut.Node("1"), ut.Node("3"))
-	g.AddEdge(g.Node("3"), ut.Node("2"))
-	g.AddEdge(g.Node("2"), g.Node("1"))
+		g.AddEdge(ut.Node("1"), ut.Node("3"))
+		g.AddEdge(g.Node("3"), ut.Node("2"))
+		g.AddEdge(g.Node("2"), g.Node("1"))
 
-	g.AddEdge(ut.Node("4"), ut.Node("5"))
-	g.AddEdge(g.Node("5"), ut.Node("7"))
-	g.AddEdge(g.Node("7"), ut.Node("6"))
-	g.AddEdge(g.Node("6"), g.Node("4"))
+		g.AddEdge(ut.Node("4"), ut.Node("5"))
+		g.AddEdge(g.Node("5"), ut.Node("7"))
+		g.AddEdge(g.Node("7"), ut.Node("6"))
+		g.AddEdge(g.Node("6"), g.Node("4"))
 
-	g.AddEdge(ut.Node("0"), g.Node("1"))
-	g.AddEdge(g.Node("3"), g.Node("4"))
+		g.AddEdge(ut.Node("0"), g.Node("1"))
+		g.AddEdge(g.Node("3"), g.Node("4"))
 
-	expected := g.Node("0")
-	actual := comp.MotherNode(g)
+		expected := g.Node("0")
+		actual := comp.MotherNode(g)
 
-	assert.Equal(T, expected, actual)
+		assert.Equal(T, expected, actual)
+
+	})
+
+	T.Run("Doesn't exist", func(T *testing.T) {
+		g := graph.NewDGraph()
+
+		g.AddEdge(ut.Node("1"), ut.Node("3"))
+		g.AddEdge(ut.Node("2"), g.Node("3"))
+
+		actual := comp.MotherNode(g)
+
+		assert.Nil(T, actual)
+
+	})
 }
