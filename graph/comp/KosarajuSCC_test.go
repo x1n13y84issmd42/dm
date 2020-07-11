@@ -11,25 +11,37 @@ import (
 )
 
 func Test_KosarajuSCC(T *testing.T) {
-	g := graph.NewDGraph()
+	g := graph.NewDGraph(
+		ut.Node("A"),
+		ut.Node("B"),
+		ut.Node("C"),
+		ut.Node("D"),
+		ut.Node("E"),
+		ut.Node("F"),
+		ut.Node("G"),
+		ut.Node("H"),
+		ut.Node("I"),
+		ut.Node("J"),
+		ut.Node("K"),
+	)
 
-	g.AddEdge(ut.Node("A"), ut.Node("B"))
-	g.AddEdge(g.Node("B"), ut.Node("C"))
-	g.AddEdge(g.Node("C"), g.Node("A"))
+	g.AddEdge("A", "B")
+	g.AddEdge("B", "C")
+	g.AddEdge("C", "A")
 
-	g.AddEdge(ut.Node("D"), ut.Node("E"))
-	g.AddEdge(g.Node("E"), ut.Node("F"))
-	g.AddEdge(g.Node("F"), g.Node("D"))
+	g.AddEdge("D", "E")
+	g.AddEdge("E", "F")
+	g.AddEdge("F", "D")
 
-	g.AddEdge(ut.Node("G"), ut.Node("H"))
-	g.AddEdge(g.Node("H"), ut.Node("I"))
-	g.AddEdge(g.Node("I"), ut.Node("J"))
-	g.AddEdge(g.Node("J"), g.Node("G"))
+	g.AddEdge("G", "H")
+	g.AddEdge("H", "I")
+	g.AddEdge("I", "J")
+	g.AddEdge("J", "G")
 
-	g.AddEdge(g.Node("J"), ut.Node("K"))
+	g.AddEdge("J", "K")
 
-	g.AddEdge(g.Node("B"), g.Node("D"))
-	g.AddEdge(g.Node("G"), g.Node("F"))
+	g.AddEdge("B", "D")
+	g.AddEdge("G", "F")
 
 	expected := []*collection.Nodes{
 		collection.NewNodes(g.Node("G"), g.Node("H"), g.Node("I"), g.Node("J")),

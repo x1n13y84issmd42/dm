@@ -12,11 +12,17 @@ import (
 func Test_AdjacencyList(T *testing.T) {
 	al := storage.NewAdjacencyList()
 
-	al.AddEdge(ut.Node("R007"), ut.Node("Down 1"))
-	al.AddEdge(al.Node("R007"), ut.Node("Down 2"))
-	al.AddEdge(al.Node("R007"), ut.Node("Down 2"))
-	al.AddEdge(ut.Node("Up 1"), al.Node("R007"))
-	al.AddEdge(ut.Node("Up 2"), al.Node("R007"))
+	al.AddNode(ut.Node("R007"))
+	al.AddNode(ut.Node("Down 1"))
+	al.AddNode(ut.Node("Down 2"))
+	al.AddNode(ut.Node("Up 1"))
+	al.AddNode(ut.Node("Up 2"))
+
+	al.AddEdge("R007", "Down 1")
+	al.AddEdge("R007", "Down 2")
+	al.AddEdge("R007", "Down 2")
+	al.AddEdge("Up 1", "R007")
+	al.AddEdge("Up 2", "R007")
 
 	T.Run("Node", func(T *testing.T) {
 		assert.Equal(T, ut.Node("R007"), al.Node("R007"))

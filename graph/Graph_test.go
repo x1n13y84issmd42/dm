@@ -12,12 +12,16 @@ import (
 )
 
 func CreateTestGraph(graph contract.Graph) {
-	root := ut.Node("R007")
+	graph.AddNode(ut.Node("R007"))
+	graph.AddNode(ut.Node("A"))
+	graph.AddNode(ut.Node("B"))
+	graph.AddNode(ut.Node("C"))
+	graph.AddNode(ut.Node("D"))
 
-	graph.AddEdge(root, ut.Node("A"))
-	graph.AddEdge(root, ut.Node("B"))
-	graph.AddEdge(ut.Node("C"), root)
-	graph.AddEdge(ut.Node("D"), root)
+	graph.AddEdge("R007", "A")
+	graph.AddEdge("R007", "B")
+	graph.AddEdge("C", "R007")
+	graph.AddEdge("D", "R007")
 }
 
 func Test_DGraph(T *testing.T) {

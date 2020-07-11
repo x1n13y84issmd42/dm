@@ -11,19 +11,28 @@ import (
 
 func Test_MotherNode(T *testing.T) {
 	T.Run("Exists", func(T *testing.T) {
-		g := graph.NewDGraph()
+		g := graph.NewDGraph(
+			ut.Node("1"),
+			ut.Node("3"),
+			ut.Node("2"),
+			ut.Node("4"),
+			ut.Node("5"),
+			ut.Node("7"),
+			ut.Node("6"),
+			ut.Node("0"),
+		)
 
-		g.AddEdge(ut.Node("1"), ut.Node("3"))
-		g.AddEdge(g.Node("3"), ut.Node("2"))
-		g.AddEdge(g.Node("2"), g.Node("1"))
+		g.AddEdge("1", "3")
+		g.AddEdge("3", "2")
+		g.AddEdge("2", "1")
 
-		g.AddEdge(ut.Node("4"), ut.Node("5"))
-		g.AddEdge(g.Node("5"), ut.Node("7"))
-		g.AddEdge(g.Node("7"), ut.Node("6"))
-		g.AddEdge(g.Node("6"), g.Node("4"))
+		g.AddEdge("4", "5")
+		g.AddEdge("5", "7")
+		g.AddEdge("7", "6")
+		g.AddEdge("6", "4")
 
-		g.AddEdge(ut.Node("0"), g.Node("1"))
-		g.AddEdge(g.Node("3"), g.Node("4"))
+		g.AddEdge("0", "1")
+		g.AddEdge("3", "4")
 
 		expected := g.Node("0")
 		actual := comp.MotherNode(g)
@@ -33,10 +42,14 @@ func Test_MotherNode(T *testing.T) {
 	})
 
 	T.Run("Doesn't exist", func(T *testing.T) {
-		g := graph.NewDGraph()
+		g := graph.NewDGraph(
+			ut.Node("1"),
+			ut.Node("3"),
+			ut.Node("2"),
+		)
 
-		g.AddEdge(ut.Node("1"), ut.Node("3"))
-		g.AddEdge(ut.Node("2"), g.Node("3"))
+		g.AddEdge("1", "3")
+		g.AddEdge("2", "3")
 
 		assert.Nil(T, comp.MotherNode(g))
 

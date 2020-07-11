@@ -10,23 +10,24 @@ import (
 )
 
 func Test_BFS_1(T *testing.T) {
-	g := graph.NewDGraph()
+	g := graph.NewDGraph(
+		ut.Node("L0"),
+		ut.Node("L10"),
+		ut.Node("L20"),
+		ut.Node("L30"),
+		ut.Node("L11"),
+		ut.Node("L21"),
+		ut.Node("L12"),
+	)
 
-	root := ut.Node("L0")
-	L10 := ut.Node("L10")
-	L20 := ut.Node("L20")
-	L30 := ut.Node("L30")
-	L11 := ut.Node("L11")
-	L21 := ut.Node("L21")
+	g.AddEdge("L0", "L10")
+	g.AddEdge("L10", "L20")
+	g.AddEdge("L20", "L30")
 
-	g.AddEdge(root, L10)
-	g.AddEdge(L10, L20)
-	g.AddEdge(L20, L30)
+	g.AddEdge("L0", "L11")
+	g.AddEdge("L11", "L21")
 
-	g.AddEdge(root, L11)
-	g.AddEdge(L11, L21)
-
-	g.AddEdge(root, ut.Node("L12"))
+	g.AddEdge("L0", "L12")
 
 	expected := "L0L10L11L12L20L21L30"
 	actual := ""
@@ -39,12 +40,9 @@ func Test_BFS_1(T *testing.T) {
 }
 
 func Test_BFS_Loop(T *testing.T) {
-	root := ut.Node("L0")
-	L10 := ut.Node("L10")
-
-	g := graph.NewDGraph()
-	g.AddEdge(root, L10)
-	g.AddEdge(L10, root)
+	g := graph.NewDGraph(ut.Node("L0"), ut.Node("L10"))
+	g.AddEdge("L0", "L10")
+	g.AddEdge("L10", "L0")
 
 	expected := "L0L10"
 	actual := ""
@@ -57,17 +55,24 @@ func Test_BFS_Loop(T *testing.T) {
 }
 
 func Test_RBFS(T *testing.T) {
-	L0 := ut.Node("L0")
-	L_10 := ut.Node("L-10")
 	g := graph.NewDGraph(
-		ut.Node("L-21"), L_10,
-		ut.Node("L-20"), L_10,
-		L_10, L0,
-		ut.Node("L-11"), L0,
-		ut.Node("L-12"), L0,
-		L0, ut.Node("L10"),
-		L0, ut.Node("L11"),
+		ut.Node("L0"),
+		ut.Node("L-10"),
+		ut.Node("L-11"),
+		ut.Node("L-21"),
+		ut.Node("L-20"),
+		ut.Node("L-12"),
+		ut.Node("L10"),
+		ut.Node("L11"),
 	)
+
+	g.AddEdge("L-21", "L-10")
+	g.AddEdge("L-20", "L-10")
+	g.AddEdge("L-10", "L0")
+	g.AddEdge("L-11", "L0")
+	g.AddEdge("L-12", "L0")
+	g.AddEdge("L0", "L10")
+	g.AddEdge("L0", "L11")
 
 	expected := "L0L-10L-11L-12L-20L-21"
 	actual := ""
