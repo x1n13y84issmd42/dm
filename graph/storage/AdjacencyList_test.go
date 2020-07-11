@@ -5,6 +5,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/x1n13y84issmd42/gog/graph/collection"
+	"github.com/x1n13y84issmd42/gog/graph/contract"
 	"github.com/x1n13y84issmd42/gog/graph/storage"
 	"github.com/x1n13y84issmd42/gog/graph/ut"
 )
@@ -58,5 +59,29 @@ func Test_AdjacencyList(T *testing.T) {
 			collection.NewNodes(ut.Node("Up 1"), ut.Node("Up 2")),
 			usn,
 		)
+	})
+
+	T.Run("Panic1", func(T *testing.T) {
+		defer func() {
+			if r := recover(); r != nil {
+				assert.Equal(T, contract.NodeID("There is no node with ID=FAILURE"), r)
+			} else {
+				T.Error("Should have panicked.")
+			}
+		}()
+
+		al.AddEdge("FAILURE", "R007")
+	})
+
+	T.Run("Panic1", func(T *testing.T) {
+		defer func() {
+			if r := recover(); r != nil {
+				assert.Equal(T, contract.NodeID("There is no node with ID=FAILURE"), r)
+			} else {
+				T.Error("Should have panicked.")
+			}
+		}()
+
+		al.AddEdge("R007", "FAILURE")
 	})
 }
