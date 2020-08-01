@@ -28,18 +28,18 @@ func Test_Set(T *testing.T) {
 	set := collection.NewNodes()
 
 	T.Run("Empty", func(T *testing.T) {
-		assert.Equal(T, 0, set.Count())
+		assert.Equal(T, uint(0), set.Count())
 	})
 
 	T.Run("Add", func(T *testing.T) {
 		ares := set.Add(tnode("a"))
-		assert.Equal(T, 1, set.Count())
+		assert.Equal(T, uint(1), set.Count())
 		assert.False(T, ares)
 
 		ares = set.Add(tnode("a"))
 		assert.True(T, ares)
 		set.Add(tnode("b"))
-		assert.Equal(T, 2, set.Count())
+		assert.Equal(T, uint(2), set.Count())
 	})
 
 	T.Run("Get", func(T *testing.T) {
@@ -49,10 +49,10 @@ func Test_Set(T *testing.T) {
 	T.Run("Remove", func(T *testing.T) {
 		ares := set.Remove("a")
 		assert.True(T, ares)
-		assert.Equal(T, 1, set.Count())
+		assert.Equal(T, uint(1), set.Count())
 		ares = set.Remove("a")
 		assert.False(T, ares)
-		assert.Equal(T, 1, set.Count())
+		assert.Equal(T, uint(1), set.Count())
 	})
 
 	T.Run("Values", func(T *testing.T) {
