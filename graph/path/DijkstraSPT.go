@@ -48,11 +48,11 @@ func DijkstraDistances(g contract.WGraph, s contract.NodeID) NodeDistanceMap {
 				continue
 			}
 
-			d := distances.Get(nd.ID, e.W)
+			d := distances.Get(e.A.ID(), e.W)
 
 			if d < distances.Get(e.B.ID(), 0) {
 				distances[e.B.ID()] = d
-				// e.A is always the id.ID node, so adding e.B to the heap.
+				// e.A is always the nd.ID node, so adding e.B to the heap.
 				heap.Push(&dheap, collection.NewNodeDistance(e.B.ID(), e.W))
 			}
 
